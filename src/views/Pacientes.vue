@@ -5,6 +5,7 @@
       <PacientesHeader :totalPacientes="3" />
       <PacienteSearch />
     </div>
+    <PacientesTabla />
   </div>
 </template>
 
@@ -12,12 +13,14 @@
 import Navbar from "../components/Navbar.vue";
 import PacientesHeader from "../components/PacientesHeader.vue";
 import PacienteSearch from "../components/PacienteSearch.vue";
+import PacientesTabla from "../components/PacientesTabla.vue";
 
 export default {
   components: {
     Navbar,
     PacientesHeader,
     PacienteSearch,
+    PacientesTabla,
   },
 };
 </script>
