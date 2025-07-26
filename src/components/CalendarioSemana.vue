@@ -31,19 +31,31 @@
 </template>
 
 <script>
+import { startOfWeek, addDays, format } from "date-fns";
+import { es } from "date-fns/locale";
+
 export default {
   name: "CalendarioSemana",
+  props: {
+    fechaSeleccionada: {
+      type: Date,
+      required: true,
+    },
+  },
+  computed: {
+    diasSemana() {
+      const inicio = startOfWeek(this.fechaSeleccionada, { weekStartsOn: 1 });
+      return Array.from({ length: 7 }, (_, i) => {
+        const fecha = addDays(inicio, i);
+        return {
+          nombre: format(fecha, "EEEE", { locale: es }),
+          fecha: format(fecha, "dd", { locale: es }),
+        };
+      });
+    },
+  },
   data() {
     return {
-      diasSemana: [
-        { nombre: "Lunes", fecha: "04" },
-        { nombre: "Martes", fecha: "05" },
-        { nombre: "Miércoles", fecha: "06" },
-        { nombre: "Jueves", fecha: "07" },
-        { nombre: "Viernes", fecha: "08" },
-        { nombre: "Sábado", fecha: "09" },
-        { nombre: "Domingo", fecha: "10" },
-      ],
       horas: [
         "7 a. m.",
         "8 a. m.",
