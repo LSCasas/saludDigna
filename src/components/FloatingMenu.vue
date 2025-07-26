@@ -1,20 +1,16 @@
 <template>
   <div class="relative">
-    <!-- Botón + -->
     <button
       @click="toggleMenu"
       class="bg-[#F9F9F9] text-[#B22222] border border-[#D8D8D8] rounded-full w-10 h-10 shadow-md flex items-center justify-center text-2xl hover:bg-[#f0f0f0]"
     >
       +
     </button>
-
-    <!-- Menú desplegable -->
     <div
       v-if="open"
       class="absolute right-0 mt-3 w-64 bg-white rounded-xl shadow-xl border border-[#D8D8D8] p-4 z-50"
     >
       <div class="grid grid-cols-2 gap-4">
-        <!-- Botón 2: Nuevo paciente -->
         <button
           class="flex flex-col items-center p-3 bg-[#F9F9F9] rounded-lg hover:bg-[#f0f0f0] border border-[#D8D8D8] text-[#B22222]"
         >
@@ -25,14 +21,12 @@
             viewBox="0 0 32 24"
             stroke="currentColor"
           >
-            <!-- Persona -->
             <path
               stroke-linecap="round"
               stroke-linejoin="round"
               stroke-width="2"
               d="M10 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zM4 20c0-2.21 3.58-4 6-4s6 1.79 6 4v0"
             />
-            <!-- Signo + (a la derecha, separado) -->
             <path
               stroke-linecap="round"
               stroke-linejoin="round"
@@ -43,7 +37,6 @@
           <span class="text-sm font-medium text-center">Nuevo paciente</span>
         </button>
 
-        <!-- Botón 3: Agendar cita -->
         <button
           class="flex flex-col items-center p-3 bg-[#F9F9F9] rounded-lg hover:bg-[#f0f0f0] border border-[#D8D8D8] text-[#B22222]"
         >
@@ -64,7 +57,6 @@
           <span class="text-sm font-medium text-center">Agendar cita</span>
         </button>
 
-        <!-- Botón 4: Crear campaña -->
         <button
           class="flex flex-col items-center p-3 bg-[#F9F9F9] rounded-lg hover:bg-[#f0f0f0] border border-[#D8D8D8] text-[#B22222]"
         >
