@@ -5,8 +5,8 @@
     <div class="flex items-center space-x-8">
       <img src="/images/logo.png" alt="Logo" class="h-10 w-auto" />
       <div class="flex space-x-6">
-        <a href="#" class="hover:underline">Agenda</a>
-        <a href="#" class="hover:underline">Pacientes</a>
+        <a href="/agenda" class="hover:underline">Agenda</a>
+        <a href="/pacientes" class="hover:underline">Pacientes</a>
       </div>
     </div>
 
