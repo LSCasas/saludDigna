@@ -1,19 +1,19 @@
 <template>
   <div class="paciente-detail p-6 bg-white rounded shadow-md max-w-4xl mx-auto">
     <PacienteInfo :paciente="paciente" />
-    <CitasSection :citas="paciente.citas" />
+    <PacienteTabs :citas="paciente.citas" />
   </div>
 </template>
 
 <script>
 import PacienteInfo from "./PacienteInfo.vue";
-import CitasSection from "./CitasSection.vue";
+import PacienteTabs from "./PacienteTabs.vue";
 
 export default {
   name: "PacienteDetail",
   components: {
     PacienteInfo,
-    CitasSection,
+    PacienteTabs,
   },
   data() {
     return {
