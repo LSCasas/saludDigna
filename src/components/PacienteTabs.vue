@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="flex border-b border-gray-200 mb-4">
+    <div class="flex border-b border-gray-200 mb-[4vh]">
       <button
         v-for="tab in tabs"
         :key="tab"
@@ -8,7 +8,7 @@
         :class="[
           'px-4 py-2 text-sm font-medium focus:outline-none',
           activeTab === tab
-            ? 'border-b-2 border-sky-500 text-sky-600'
+            ? 'border-b-2 border-[#B22222] text-[#B22222]'
             : 'text-gray-500',
         ]"
       >
@@ -56,6 +56,6 @@ export default {
 
 <style scoped>
 button:hover {
-  color: #0ea5e9;
+  color: #b22222;
 }
 </style>

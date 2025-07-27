@@ -1,5 +1,5 @@
 <template>
-  <div class="paciente-detail p-6 bg-white rounded shadow-md max-w-4xl mx-auto">
+  <div class="p-6 max-w-5xl mx-auto">
     <PacienteInfo :paciente="paciente" />
     <PacienteTabs :citas="paciente.citas" />
   </div>

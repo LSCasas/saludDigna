@@ -48,6 +48,7 @@
     </transition>
 
     <!-- Drawer lateral -->
+    <!-- Drawer lateral -->
     <transition
       enter-active-class="transition-transform duration-300"
       enter-from-class="translate-x-full"
@@ -58,7 +59,7 @@
     >
       <div
         v-if="pacienteSeleccionado"
-        class="fixed right-0 top-0 h-full w-full max-w-md bg-white shadow-2xl p-6 z-50"
+        class="fixed right-0 top-0 h-full w-full max-w-2xl bg-white shadow-2xl p-6 z-50"
       >
         <PacienteDetail />
       </div>

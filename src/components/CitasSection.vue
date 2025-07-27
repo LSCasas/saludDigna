@@ -1,27 +1,32 @@
 <template>
-  <div class="citas-section mt-6">
-    <h3 class="font-semibold mb-2">Citas</h3>
-    <table class="w-full border-collapse text-left">
-      <thead>
-        <tr class="bg-blue-600 text-white">
-          <th class="p-2">Fecha</th>
-          <th class="p-2">Motivo</th>
-          <th class="p-2">Estado</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="cita in citas" :key="cita.id" class="border-b">
-          <td class="p-2">{{ cita.fecha }} | {{ cita.hora }}</td>
-          <td class="p-2">{{ cita.motivo }}</td>
-          <td class="p-2">
-            <span v-if="cita.estado === 'Confirmada'" class="text-green-600"
-              >✔ Confirmada</span
-            >
-            <span v-else>Por confirmar</span>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+  <div class="citas-section mt-6 text-sm">
+    <div class="overflow-x-auto rounded-md border border-[#D8D8D8]">
+      <table class="w-full text-left border-collapse">
+        <thead>
+          <tr class="bg-[#B22222] text-white">
+            <th class="p-3">Fecha</th>
+            <th class="p-3">Motivo</th>
+            <th class="p-3">Estado</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            v-for="cita in citas"
+            :key="cita.id"
+            class="even:bg-[#F9F9F9] odd:bg-white text-gray-800 border-b border-[#D8D8D8]"
+          >
+            <td class="p-3">{{ cita.fecha }} | {{ cita.hora }}</td>
+            <td class="p-3">{{ cita.motivo }}</td>
+            <td class="p-3">
+              <span v-if="cita.estado === 'Confirmada'" class="font-medium">
+                Confirmada
+              </span>
+              <span v-else class="text-gray-600">Por confirmar</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </template>
 
