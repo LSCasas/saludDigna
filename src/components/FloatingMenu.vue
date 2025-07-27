@@ -14,9 +14,9 @@
       class="absolute right-0 mt-3 w-64 bg-white rounded-xl shadow-xl border border-[#D8D8D8] p-4 z-50"
     >
       <div class="grid grid-cols-2 gap-4">
-        <NuevoPacienteButton @open-new-patient="openNewPatientForm" />
-        <AgendarCitaButton @open-appointment="openAppointmentForm" />
-        <GenerarRecetaButton @open-prescription="openPrescriptionForm" />
+        <PatientButton @open-new-patient="openPatientForm" />
+        <ScheduleAppointmentButton @open-appointment="openAppointmentForm" />
+        <GeneratePrescriptionButton @open-prescription="openPrescriptionForm" />
       </div>
     </div>
 
@@ -42,16 +42,16 @@
 
     <!-- Modal: Nuevo Paciente -->
     <div
-      v-if="showNewPatientForm"
+      v-if="showPatientForm"
       class="cdk-overlay-backdrop cdk-overlay-backdrop-showing"
-      @click.self="closeNewPatientForm"
+      @click.self="closePatientForm"
     >
       <div
         class="bg-white p-6 rounded-lg w-full max-w-2xl relative m-auto mt-20"
         @click.stop
       >
         <button
-          @click="closeNewPatientForm"
+          @click="closePatientForm"
           class="absolute top-3 right-3 text-gray-500 hover:text-[#B22222] text-xl"
         >
           ×
@@ -85,9 +85,9 @@
 import CreateAppointment from "./CreateAppointment.vue";
 import CreateNewPatient from "./CreateNewPatient.vue";
 import CreatePrescription from "./CreatePrescription.vue";
-import NuevoPacienteButton from "./NuevoPacienteButton.vue";
-import AgendarCitaButton from "./AgendarCitaButton.vue";
-import GenerarRecetaButton from "./GenerarRecetaButton.vue";
+import PatientButton from "./PatientButton.vue";
+import ScheduleAppointmentButton from "./ScheduleAppointmentButton.vue";
+import GeneratePrescriptionButton from "./GeneratePrescriptionButton.vue";
 
 export default {
   name: "FloatingMenu",
@@ -95,15 +95,15 @@ export default {
     CreateAppointment,
     CreateNewPatient,
     CreatePrescription,
-    NuevoPacienteButton,
-    AgendarCitaButton,
-    GenerarRecetaButton,
+    PatientButton,
+    ScheduleAppointmentButton,
+    GeneratePrescriptionButton,
   },
   data() {
     return {
       open: false,
       showAppointmentForm: false,
-      showNewPatientForm: false,
+      showPatientForm: false,
       showPrescriptionForm: false,
     };
   },
@@ -118,12 +118,12 @@ export default {
     closeAppointmentForm() {
       this.showAppointmentForm = false;
     },
-    openNewPatientForm() {
-      this.showNewPatientForm = true;
+    openPatientForm() {
+      this.showPatientForm = true;
       this.open = false;
     },
-    closeNewPatientForm() {
-      this.showNewPatientForm = false;
+    closePatientForm() {
+      this.showPatientForm = false;
     },
     openPrescriptionForm() {
       this.showPrescriptionForm = true;

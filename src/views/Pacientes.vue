@@ -2,25 +2,25 @@
   <div>
     <Navbar />
     <div class="px-6 py-4 flex justify-between items-center">
-      <PacientesHeader :totalPacientes="3" />
-      <PacienteSearch />
+      <PatientsHeader :totalPacientes="3" />
+      <PatientSearch />
     </div>
-    <PacientesTabla />
+    <PatientsTable />
   </div>
 </template>
 
 <script>
 import Navbar from "../components/Navbar.vue";
-import PacientesHeader from "../components/PacientesHeader.vue";
-import PacienteSearch from "../components/PacienteSearch.vue";
-import PacientesTabla from "../components/PacientesTabla.vue";
+import PatientsHeader from "../components/PatientsHeader.vue";
+import PatientSearch from "../components/PatientSearch.vue";
+import PatientsTable from "../components/PatientsTable.vue";
 
 export default {
   components: {
     Navbar,
-    PacientesHeader,
-    PacienteSearch,
-    PacientesTabla,
+    PatientsHeader,
+    PatientSearch,
+    PatientsTable,
   },
 };
 </script>

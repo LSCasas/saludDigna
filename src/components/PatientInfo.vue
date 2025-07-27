@@ -15,7 +15,7 @@
 
 <script>
 export default {
-  name: "PacienteInfo",
+  name: "PatientInfo",
   props: {
     paciente: {
       type: Object,

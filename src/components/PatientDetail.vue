@@ -1,19 +1,19 @@
 <template>
   <div class="p-6 max-w-5xl mx-auto">
-    <PacienteInfo :paciente="paciente" />
-    <PacienteTabs :citas="paciente.citas" />
+    <PatientInfo :paciente="paciente" />
+    <PatientTabs :citas="paciente.citas" />
   </div>
 </template>
 
 <script>
-import PacienteInfo from "./PacienteInfo.vue";
-import PacienteTabs from "./PacienteTabs.vue";
+import PatientInfo from "./PatientInfo.vue";
+import PatientTabs from "./PatientTabs.vue";
 
 export default {
-  name: "PacienteDetail",
+  name: "PatientDetail",
   components: {
-    PacienteInfo,
-    PacienteTabs,
+    PatientInfo,
+    PatientTabs,
   },
   data() {
     return {

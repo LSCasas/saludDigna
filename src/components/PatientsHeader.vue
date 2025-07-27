@@ -9,7 +9,7 @@
 
 <script>
 export default {
-  name: "PacientesHeader",
+  name: "PatientsHeader",
   props: {
     totalPacientes: {
       type: Number,

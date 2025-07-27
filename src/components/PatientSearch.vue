@@ -29,7 +29,7 @@
 
 <script>
 export default {
-  name: "PacienteSearch",
+  name: "PatientSearch",
   data() {
     return {
       searchTerm: "",

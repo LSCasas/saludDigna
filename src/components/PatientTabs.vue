@@ -17,23 +17,23 @@
     </div>
 
     <div v-if="activeTab === 'Citas'">
-      <CitasSection :citas="citas" />
+      <AppointmentsSection :citas="citas" />
     </div>
     <div v-else-if="activeTab === 'Consultas'">
-      <RecetasSection :citas="citas" />
+      <PrescriptionsSection :citas="citas" />
     </div>
   </div>
 </template>
 
 <script>
-import CitasSection from "./CitasSection.vue";
-import RecetasSection from "./RecetasSection.vue";
+import AppointmentsSection from "./AppointmentsSection.vue";
+import PrescriptionsSection from "./PrescriptionsSection.vue";
 
 export default {
-  name: "PacienteTabs",
+  name: "PatientTabs",
   components: {
-    CitasSection,
-    RecetasSection,
+    AppointmentsSection,
+    PrescriptionsSection,
   },
   props: {
     citas: {

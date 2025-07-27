@@ -5,8 +5,7 @@
         <thead>
           <tr class="bg-[#B22222] text-white">
             <th class="p-3">Fecha</th>
-            <th class="p-3">Motivo</th>
-            <th class="p-3">Estado</th>
+            <th class="p-3">Nombre</th>
           </tr>
         </thead>
         <tbody>
@@ -16,13 +15,7 @@
             class="even:bg-[#F9F9F9] odd:bg-white text-gray-800 border-b border-[#D8D8D8]"
           >
             <td class="p-3">{{ cita.fecha }} | {{ cita.hora }}</td>
-            <td class="p-3">{{ cita.motivo }}</td>
-            <td class="p-3">
-              <span v-if="cita.estado === 'Confirmada'" class="font-medium">
-                Confirmada
-              </span>
-              <span v-else class="text-gray-600">Por confirmar</span>
-            </td>
+            <td class="p-3">{{ cita.nombre }}</td>
           </tr>
         </tbody>
       </table>
@@ -32,7 +25,7 @@
 
 <script>
 export default {
-  name: "CitasSection",
+  name: "AppointmentsSection",
   props: {
     citas: {
       type: Array,

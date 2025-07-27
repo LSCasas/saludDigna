@@ -61,18 +61,18 @@
         v-if="pacienteSeleccionado"
         class="fixed right-0 top-0 h-full w-full max-w-2xl bg-white shadow-2xl p-6 z-50"
       >
-        <PacienteDetail />
+        <PatientDetail />
       </div>
     </transition>
   </div>
 </template>
 
 <script>
-import PacienteDetail from "./PacienteDetail.vue";
+import PatientDetail from "./PatientDetail.vue";
 
 export default {
-  name: "PacientesTabla",
-  components: { PacienteDetail },
+  name: "PatientsTable",
+  components: { PatientDetail },
   data() {
     return {
       pacientes: [
