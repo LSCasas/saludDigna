@@ -1,5 +1,5 @@
 <template>
-  <div class="relative">
+  <div class="relative" ref="menuContainer">
     <button
       @click="toggleMenu"
       class="bg-[#F9F9F9] text-[#B22222] border border-[#D8D8D8] rounded-full w-10 h-10 shadow-md flex items-center justify-center text-2xl hover:bg-[#f0f0f0]"
@@ -93,6 +93,18 @@ export default {
     toggleMenu() {
       this.open = !this.open;
     },
+    handleClickOutside(event) {
+      const menu = this.$refs.menuContainer;
+      if (menu && !menu.contains(event.target)) {
+        this.open = false;
+      }
+    },
+  },
+  mounted() {
+    document.addEventListener("click", this.handleClickOutside);
+  },
+  beforeDestroy() {
+    document.removeEventListener("click", this.handleClickOutside);
   },
 };
 </script>

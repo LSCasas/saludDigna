@@ -19,14 +19,8 @@
     <div v-if="activeTab === 'Citas'">
       <CitasSection :citas="citas" />
     </div>
-    <div v-else-if="activeTab === 'Filiación'">
+    <div v-else-if="activeTab === 'Consultas'">
       <p class="text-gray-500">Sección de filiación (por implementar).</p>
-    </div>
-    <div v-else-if="activeTab === 'Presupuestos'">
-      <p class="text-gray-500">Sección de presupuestos (por implementar).</p>
-    </div>
-    <div v-else-if="activeTab === 'Tareas'">
-      <p class="text-gray-500">Sección de tareas (por implementar).</p>
     </div>
   </div>
 </template>
@@ -47,7 +41,7 @@ export default {
   },
   data() {
     return {
-      tabs: ["Citas", "Filiación", "Presupuestos", "Tareas"],
+      tabs: ["Citas", "Consultas"],
       activeTab: "Citas",
     };
   },
