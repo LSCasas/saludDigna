@@ -1,5 +1,6 @@
 <template>
   <button
+    @click="$emit('open-prescription')"
     class="flex flex-col items-center p-3 bg-[#F9F9F9] rounded-lg hover:bg-[#f0f0f0] border border-[#D8D8D8] text-[#B22222]"
   >
     <svg
