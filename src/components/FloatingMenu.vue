@@ -6,6 +6,7 @@
     >
       +
     </button>
+
     <div
       v-if="open"
       class="absolute right-0 mt-3 w-64 bg-white rounded-xl shadow-xl border border-[#D8D8D8] p-4 z-50"
@@ -38,6 +39,7 @@
         </button>
 
         <button
+          @click="openAppointmentForm"
           class="flex flex-col items-center p-3 bg-[#F9F9F9] rounded-lg hover:bg-[#f0f0f0] border border-[#D8D8D8] text-[#B22222]"
         >
           <svg
@@ -78,20 +80,52 @@
         </button>
       </div>
     </div>
+
+    <div
+      v-if="showAppointmentForm"
+      class="cdk-overlay-backdrop cdk-overlay-backdrop-showing"
+      @click.self="closeAppointmentForm"
+    >
+      <div
+        class="bg-white p-6 rounded-lg w-full max-w-2xl relative m-auto mt-20"
+        @click.stop
+      >
+        <button
+          @click="closeAppointmentForm"
+          class="absolute top-3 right-3 text-gray-500 hover:text-[#B22222] text-xl"
+        >
+          ×
+        </button>
+        <CreateAppointment />
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
+import CreateAppointment from "./CreateAppointment.vue";
+
 export default {
   name: "FloatingMenu",
+  components: {
+    CreateAppointment,
+  },
   data() {
     return {
       open: false,
+      showAppointmentForm: false,
     };
   },
   methods: {
     toggleMenu() {
       this.open = !this.open;
+    },
+    openAppointmentForm() {
+      this.showAppointmentForm = true;
+      this.open = false;
+    },
+    closeAppointmentForm() {
+      this.showAppointmentForm = false;
     },
     handleClickOutside(event) {
       const menu = this.$refs.menuContainer;
@@ -108,3 +142,19 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.cdk-overlay-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.cdk-overlay-backdrop-showing {
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+</style>
