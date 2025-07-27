@@ -20,18 +20,20 @@
       <CitasSection :citas="citas" />
     </div>
     <div v-else-if="activeTab === 'Consultas'">
-      <p class="text-gray-500">Sección de filiación (por implementar).</p>
+      <RecetasSection :citas="citas" />
     </div>
   </div>
 </template>
 
 <script>
 import CitasSection from "./CitasSection.vue";
+import RecetasSection from "./RecetasSection.vue";
 
 export default {
   name: "PacienteTabs",
   components: {
     CitasSection,
+    RecetasSection,
   },
   props: {
     citas: {
