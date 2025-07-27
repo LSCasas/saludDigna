@@ -33,7 +33,7 @@
 
     <button
       type="submit"
-      class="w-full bg-[#B22222] text-white py-2 rounded hover:bg-red-900 transition-colors"
+      class="w-full cursor-pointer bg-[#B22222] text-white py-2 rounded hover:bg-red-900 transition-colors"
     >
       Iniciar sesión
     </button>
@@ -42,12 +42,22 @@
 
 <script setup>
 import { ref } from "vue";
+import { useRouter } from "vue-router";
+import { useToast } from "vue-toastification";
+import { loginUser } from "../api/auth";
 
 const correo = ref("");
 const contraseña = ref("");
+const router = useRouter();
+const toast = useToast();
 
-function handleSubmit() {
-  console.log("Correo:", correo.value);
-  console.log("Contraseña:", contraseña.value);
-}
+const handleSubmit = async () => {
+  try {
+    await loginUser({ email: correo.value, password: contraseña.value });
+    router.push("/pacientes");
+  } catch (error) {
+    const message = error?.message;
+    console.log(message);
+  }
+};
 </script>
