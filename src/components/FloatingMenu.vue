@@ -3,7 +3,7 @@
     <!-- Botón flotante -->
     <button
       @click="toggleMenu"
-      class="bg-[#F9F9F9] text-[#B22222] border border-[#D8D8D8] rounded-full w-10 h-10 shadow-md flex items-center justify-center text-2xl hover:bg-[#f0f0f0]"
+      class="bg-[#F9F9F9] cursor-pointer text-[#B22222] border border-[#D8D8D8] rounded-full w-10 h-10 shadow-md flex items-center justify-center text-2xl hover:bg-[#f0f0f0]"
     >
       +
     </button>
@@ -15,8 +15,8 @@
     >
       <div class="grid grid-cols-2 gap-4">
         <PatientButton @open-new-patient="openPatientForm" />
-        <ScheduleAppointmentButton @open-appointment="openAppointmentForm" />
-        <GeneratePrescriptionButton @open-prescription="openPrescriptionForm" />
+        <AppointmentButton @open-appointment="openAppointmentForm" />
+        <PrescriptionButton @open-prescription="openPrescriptionForm" />
       </div>
     </div>
 
@@ -86,8 +86,8 @@ import CreateAppointment from "./CreateAppointment.vue";
 import CreateNewPatient from "./CreateNewPatient.vue";
 import CreatePrescription from "./CreatePrescription.vue";
 import PatientButton from "./PatientButton.vue";
-import ScheduleAppointmentButton from "./ScheduleAppointmentButton.vue";
-import GeneratePrescriptionButton from "./GeneratePrescriptionButton.vue";
+import AppointmentButton from "./AppointmentButton.vue";
+import PrescriptionButton from "./PrescriptionButton.vue";
 
 export default {
   name: "FloatingMenu",
@@ -96,8 +96,8 @@ export default {
     CreateNewPatient,
     CreatePrescription,
     PatientButton,
-    ScheduleAppointmentButton,
-    GeneratePrescriptionButton,
+    AppointmentButton,
+    PrescriptionButton,
   },
   data() {
     return {

@@ -6,7 +6,7 @@
         :key="tab"
         @click="activeTab = tab"
         :class="[
-          'px-4 py-2 text-sm font-medium focus:outline-none',
+          'px-4 cursor-pointer py-2 text-sm font-medium focus:outline-none',
           activeTab === tab
             ? 'border-b-2 border-[#B22222] text-[#B22222]'
             : 'text-gray-500',
