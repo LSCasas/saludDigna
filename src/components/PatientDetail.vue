@@ -1,25 +1,37 @@
 <template>
-  <div v-if="paciente" class="p-6 max-w-5xl mx-auto">
-    <PatientInfo :paciente="paciente" />
+  <div v-if="paciente">
+    <PatientInfo :paciente="paciente" @editar="modoEdicion = true" />
+
+    <!-- Mostrar formulario sólo si modoEdicion es true -->
+    <PatientForm
+      v-if="modoEdicion"
+      :paciente="paciente"
+      @cancelar="modoEdicion = false"
+      @guardado="handlePacienteActualizado"
+    />
+
     <PatientTabs :citas="paciente.citas || []" />
   </div>
 </template>
 
 <script>
 import PatientInfo from "./PatientInfo.vue";
+import PatientForm from "./PatientForm.vue"; // Tu formulario
 import PatientTabs from "./PatientTabs.vue";
 
 export default {
-  name: "PatientDetail",
-  props: {
-    paciente: {
-      type: Object,
-      required: true,
-    },
+  components: { PatientInfo, PatientForm, PatientTabs },
+  props: { paciente: Object },
+  data() {
+    return {
+      modoEdicion: false,
+    };
   },
-  components: {
-    PatientInfo,
-    PatientTabs,
+  methods: {
+    handlePacienteActualizado(nuevosDatos) {
+      this.modoEdicion = false;
+      Object.assign(this.paciente, nuevosDatos);
+    },
   },
 };
 </script>

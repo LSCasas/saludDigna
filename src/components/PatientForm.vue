@@ -119,7 +119,7 @@
       <button
         type="button"
         class="px-4 cursor-pointer py-2 rounded border border-[#D8D8D8] text-gray-700 bg-white"
-        @click="resetForm"
+        @click="$emit('cancelar')"
       >
         Cancelar
       </button>
@@ -127,7 +127,7 @@
         type="submit"
         class="px-4 cursor-pointer py-2 rounded bg-[#B22222] text-white hover:bg-[#911c1c]"
       >
-        Crear
+        {{ isEdicion ? "Guardar" : "Crear" }}
       </button>
     </div>
   </form>
@@ -135,8 +135,19 @@
 
 <script setup>
 import { reactive, ref, watch } from "vue";
-import { createPaciente } from "../api/pacientes.js";
+import { createPaciente, updatePaciente } from "../api/pacientes.js";
+import { defineProps, defineEmits } from "vue";
 
+const props = defineProps({
+  paciente: {
+    type: Object,
+    default: () => ({}),
+  },
+});
+
+const emit = defineEmits(["cancelar", "guardado"]);
+
+const isEdicion = ref(false);
 const noTelefono = ref(false);
 const noEmail = ref(false);
 
@@ -150,6 +161,7 @@ const form = reactive({
   genero: "",
 });
 
+// ✅ mover resetForm aquí arriba
 const resetForm = () => {
   form.nombre = "";
   form.apellidoP = "";
@@ -162,16 +174,36 @@ const resetForm = () => {
   noEmail.value = false;
 };
 
+// Cargar datos del paciente para editar
+watch(
+  () => props.paciente,
+  (nuevoPaciente) => {
+    if (nuevoPaciente && Object.keys(nuevoPaciente).length > 0) {
+      isEdicion.value = true;
+      form.nombre = nuevoPaciente.nombre || "";
+      form.apellidoP = nuevoPaciente.apellidoP || "";
+      form.apellidoM = nuevoPaciente.apellidoM || "";
+      form.telefono = nuevoPaciente.telefono || "";
+      form.correo = nuevoPaciente.correo || "";
+      form.fecha_nacimiento = nuevoPaciente.fecha_nacimiento || "";
+      form.genero = nuevoPaciente.genero || "";
+
+      noTelefono.value = !form.telefono;
+      noEmail.value = !form.correo;
+    } else {
+      isEdicion.value = false;
+      resetForm(); // ✅ ahora sí existe
+    }
+  },
+  { immediate: true }
+);
+
 watch(noTelefono, (val) => {
-  if (val) {
-    form.telefono = "";
-  }
+  if (val) form.telefono = "";
 });
 
 watch(noEmail, (val) => {
-  if (val) {
-    form.correo = "";
-  }
+  if (val) form.correo = "";
 });
 
 const handleSubmit = async () => {
@@ -186,8 +218,16 @@ const handleSubmit = async () => {
       genero: form.genero,
     };
 
-    await createPaciente(payload);
-    resetForm();
-  } catch (error) {}
+    if (isEdicion.value && props.paciente.id_paciente) {
+      await updatePaciente(props.paciente.id_paciente, payload);
+    } else {
+      await createPaciente(payload);
+      resetForm();
+    }
+
+    emit("guardado", payload);
+  } catch (error) {
+    console.error(error);
+  }
 };
 </script>

@@ -47,7 +47,8 @@
       @click.self="closePatientForm"
     >
       <div
-        class="bg-white p-6 rounded-lg w-full max-w-2xl relative m-auto mt-20"
+        class="bg-white p-6 rounded-lg w-full max-w-2xl relative"
+        style="max-height: 90vh; overflow-y: auto"
         @click.stop
       >
         <button
@@ -154,10 +155,17 @@ export default {
   inset: 0;
   background: rgba(0, 0, 0, 0.4);
   z-index: 40;
+
+  /* Centrar contenido */
   display: flex;
   align-items: center;
   justify-content: center;
+
+  /* Esto asegura que el modal no se salga del viewport */
+  overflow-y: auto;
+  padding: 1rem; /* espacio para el scroll si es necesario */
 }
+
 .cdk-overlay-backdrop-showing {
   opacity: 1;
   transition: opacity 0.3s ease;
