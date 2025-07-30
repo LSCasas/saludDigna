@@ -118,7 +118,7 @@
     <div class="md:col-span-2 flex justify-end gap-2 mt-4">
       <button
         type="button"
-        class="px-4 py-2 rounded border border-[#D8D8D8] text-gray-700 bg-white"
+        class="px-4 cursor-pointer py-2 rounded border border-[#D8D8D8] text-gray-700 bg-white"
         @click="resetForm"
       >
         Cancelar
