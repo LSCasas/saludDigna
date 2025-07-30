@@ -161,7 +161,6 @@ const form = reactive({
   genero: "",
 });
 
-// ✅ mover resetForm aquí arriba
 const resetForm = () => {
   form.nombre = "";
   form.apellidoP = "";
@@ -174,7 +173,6 @@ const resetForm = () => {
   noEmail.value = false;
 };
 
-// Cargar datos del paciente para editar
 watch(
   () => props.paciente,
   (nuevoPaciente) => {
@@ -192,7 +190,7 @@ watch(
       noEmail.value = !form.correo;
     } else {
       isEdicion.value = false;
-      resetForm(); // ✅ ahora sí existe
+      resetForm();
     }
   },
   { immediate: true }
@@ -211,9 +209,9 @@ const handleSubmit = async () => {
     const payload = {
       nombre: form.nombre,
       apellidoP: form.apellidoP,
-      apellidoM: form.apellidoM || null,
-      telefono: noTelefono.value ? null : form.telefono || null,
-      correo: noEmail.value ? null : form.correo || null,
+      apellidoM: form.apellidoM || "",
+      telefono: noTelefono.value ? "" : form.telefono,
+      correo: noEmail.value ? "" : form.correo,
       fecha_nacimiento: form.fecha_nacimiento,
       genero: form.genero,
     };
@@ -222,12 +220,13 @@ const handleSubmit = async () => {
       await updatePaciente(props.paciente.id_paciente, payload);
     } else {
       await createPaciente(payload);
-      resetForm();
     }
 
     emit("guardado", payload);
+
+    window.location.reload();
   } catch (error) {
-    console.error(error);
+    console.error("Error al guardar paciente:", error.response?.data || error);
   }
 };
 </script>
