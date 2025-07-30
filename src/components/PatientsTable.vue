@@ -13,25 +13,34 @@
       <tbody class="text-gray-700">
         <tr
           v-for="paciente in pacientes"
-          :key="paciente.id"
+          :key="paciente.id_paciente"
           class="border-t border-gray-300 cursor-pointer hover:bg-gray-100 transition-colors"
           @click="seleccionarPaciente(paciente)"
         >
           <td class="px-4 py-3 flex items-center gap-3">
             <img
-              :src="paciente.imagen"
+              :src="getImagen(paciente)"
               alt="Foto"
               class="w-10 h-10 rounded-full object-cover"
             />
-            <span>{{ paciente.nombre }}</span>
+            <div>
+              <div class="font-semibold">
+                {{ paciente.nombre }} {{ paciente.apellidoP }}
+                {{ paciente.apellidoM }}
+              </div>
+              <div class="text-xs text-gray-500 capitalize">
+                {{ paciente.genero }} •
+                {{ calcularEdad(paciente.fecha_nacimiento) }} años
+              </div>
+            </div>
           </td>
-          <td class="px-4 py-3">{{ paciente.ultimaCita }}</td>
-          <td class="px-4 py-3">{{ paciente.proximaCita }}</td>
+          <td class="px-4 py-3">--</td>
+          <td class="px-4 py-3">--</td>
         </tr>
       </tbody>
     </table>
 
-    <!-- Overlay estilo cdk-backdrop -->
+    <!-- Overlay -->
     <transition
       enter-active-class="transition-opacity duration-300"
       enter-from-class="opacity-0"
@@ -47,7 +56,6 @@
       ></div>
     </transition>
 
-    <!-- Drawer lateral -->
     <!-- Drawer lateral -->
     <transition
       enter-active-class="transition-transform duration-300"
@@ -75,31 +83,17 @@ export default {
   components: { PatientDetail },
   data() {
     return {
-      pacientes: [
-        {
-          id: 1,
-          nombre: "Laura Hernández",
-          imagen: "https://randomuser.me/api/portraits/women/44.jpg",
-          ultimaCita: "20 jul 2025",
-          proximaCita: "27 jul 2025",
-        },
-        {
-          id: 2,
-          nombre: "Carlos Méndez",
-          imagen: "https://randomuser.me/api/portraits/men/32.jpg",
-          ultimaCita: "19 jul 2025",
-          proximaCita: "28 jul 2025",
-        },
-        {
-          id: 3,
-          nombre: "Diana Ruiz",
-          imagen: "https://randomuser.me/api/portraits/women/65.jpg",
-          ultimaCita: "15 jul 2025",
-          proximaCita: "--",
-        },
-      ],
+      pacientes: [], // ← Llenar con la API en mounted()
       pacienteSeleccionado: null,
     };
+  },
+  async mounted() {
+    try {
+      const { getPacientes } = await import("../api/pacientes");
+      this.pacientes = await getPacientes();
+    } catch (error) {
+      // El toast ya maneja el error
+    }
   },
   methods: {
     seleccionarPaciente(paciente) {
@@ -107,6 +101,34 @@ export default {
     },
     cerrarDrawer() {
       this.pacienteSeleccionado = null;
+    },
+    calcularEdad(fecha) {
+      const nacimiento = new Date(fecha);
+      const hoy = new Date();
+      let edad = hoy.getFullYear() - nacimiento.getFullYear();
+      const m = hoy.getMonth() - nacimiento.getMonth();
+      if (m < 0 || (m === 0 && hoy.getDate() < nacimiento.getDate())) {
+        edad--;
+      }
+      return edad;
+    },
+    getImagen(p) {
+      const edad = this.calcularEdad(p.fecha_nacimiento);
+      const genero = p.genero.toUpperCase(); // ← Para evitar problemas con minúsculas
+
+      if (edad <= 3) return "/images/baby.png";
+
+      if (edad <= 18) {
+        return genero === "M" ? "/images/boy.png" : "/images/girl.png";
+      }
+
+      if (edad >= 60) {
+        return genero === "M"
+          ? "/images/grandfather.png"
+          : "/images/grandmother.png";
+      }
+
+      return genero === "M" ? "/images/man.png" : "/images/woman.png";
     },
   },
 };
