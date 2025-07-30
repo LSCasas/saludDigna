@@ -69,6 +69,15 @@
         v-if="pacienteSeleccionado"
         class="fixed right-0 top-0 h-full w-full max-w-2xl bg-white shadow-2xl p-6 z-50"
       >
+        <!-- Botón cerrar (X) -->
+        <button
+          @click="cerrarDrawer"
+          class="text-3xl font-bold absolute top-4 right-4 cursor-pointer text-gray-700 hover:text-red-600"
+          aria-label="Cerrar menú"
+        >
+          &times;
+        </button>
+
         <PatientDetail :paciente="pacienteSeleccionado" />
       </div>
     </transition>
