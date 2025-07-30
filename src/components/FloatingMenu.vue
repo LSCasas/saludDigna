@@ -32,7 +32,7 @@
       >
         <button
           @click="closeAppointmentForm"
-          class="absolute top-3 right-3 text-gray-500 hover:text-[#B22222] text-xl"
+          class="absolute top-3 right-3 text-gray-500 hover:text-[#B22222] text-3xl cursor-pointer"
         >
           ×
         </button>
@@ -52,7 +52,7 @@
       >
         <button
           @click="closePatientForm"
-          class="absolute top-3 right-3 text-gray-500 hover:text-[#B22222] text-xl"
+          class="absolute top-3 right-3 text-gray-500 hover:text-[#B22222] text-3xl cursor-pointer"
         >
           ×
         </button>
@@ -71,7 +71,7 @@
       >
         <button
           @click="closePrescriptionForm"
-          class="absolute top-3 right-3 text-gray-500 hover:text-[#B22222] text-xl"
+          class="absolute top-3 right-3 text-gray-500 hover:text-[#B22222] text-3xl cursor-pointer"
         >
           ×
         </button>
