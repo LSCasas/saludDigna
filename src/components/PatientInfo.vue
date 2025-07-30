@@ -3,10 +3,12 @@
     <img
       :src="paciente.imagen"
       alt="Foto del paciente"
-      class="w-16 h-16 rounded-full"
+      class="w-16 h-16 rounded-full object-cover"
     />
     <div>
-      <h2 class="text-lg font-semibold">{{ paciente.nombre }}</h2>
+      <h2 class="text-lg font-semibold">
+        {{ paciente.nombre }} {{ paciente.apellidoP }} {{ paciente.apellidoM }}
+      </h2>
       <p>{{ paciente.edad }} años</p>
       <p class="text-[#B22222]">{{ paciente.telefono }}</p>
     </div>

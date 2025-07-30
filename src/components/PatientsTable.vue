@@ -15,7 +15,7 @@
           v-for="paciente in pacientes"
           :key="paciente.id_paciente"
           class="border-t border-gray-300 cursor-pointer hover:bg-gray-100 transition-colors"
-          @click="seleccionarPaciente(paciente)"
+          @click="seleccionarPaciente(paciente.id_paciente)"
         >
           <td class="px-4 py-3 flex items-center gap-3">
             <img
@@ -69,7 +69,7 @@
         v-if="pacienteSeleccionado"
         class="fixed right-0 top-0 h-full w-full max-w-2xl bg-white shadow-2xl p-6 z-50"
       >
-        <PatientDetail />
+        <PatientDetail :paciente="pacienteSeleccionado" />
       </div>
     </transition>
   </div>
@@ -77,13 +77,14 @@
 
 <script>
 import PatientDetail from "./PatientDetail.vue";
+import { getPacienteById } from "../api/pacientes";
 
 export default {
   name: "PatientsTable",
   components: { PatientDetail },
   data() {
     return {
-      pacientes: [], // ← Llenar con la API en mounted()
+      pacientes: [],
       pacienteSeleccionado: null,
     };
   },
@@ -92,12 +93,25 @@ export default {
       const { getPacientes } = await import("../api/pacientes");
       this.pacientes = await getPacientes();
     } catch (error) {
-      // El toast ya maneja el error
+      console.error("Error cargando pacientes:", error);
     }
   },
   methods: {
-    seleccionarPaciente(paciente) {
-      this.pacienteSeleccionado = paciente;
+    async seleccionarPaciente(id) {
+      try {
+        const paciente = await getPacienteById(id);
+        const edad = this.calcularEdad(paciente.fecha_nacimiento);
+        paciente.edad = edad;
+        paciente.imagen = this.getImagen(paciente);
+
+        if (!paciente.citas) {
+          paciente.citas = [];
+        }
+
+        this.pacienteSeleccionado = paciente;
+      } catch (e) {
+        console.error("Error al seleccionar paciente:", e);
+      }
     },
     cerrarDrawer() {
       this.pacienteSeleccionado = null;
@@ -114,20 +128,15 @@ export default {
     },
     getImagen(p) {
       const edad = this.calcularEdad(p.fecha_nacimiento);
-      const genero = p.genero.toUpperCase(); // ← Para evitar problemas con minúsculas
+      const genero = p.genero.toUpperCase();
 
       if (edad <= 3) return "/images/baby.png";
-
-      if (edad <= 18) {
+      if (edad <= 18)
         return genero === "M" ? "/images/boy.png" : "/images/girl.png";
-      }
-
-      if (edad >= 60) {
+      if (edad >= 60)
         return genero === "M"
           ? "/images/grandfather.png"
           : "/images/grandmother.png";
-      }
-
       return genero === "M" ? "/images/man.png" : "/images/woman.png";
     },
   },
