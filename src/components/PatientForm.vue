@@ -115,6 +115,20 @@
       </select>
     </div>
 
+    <div v-if="isEdicion">
+      <label class="block text-sm font-medium text-gray-700"
+        >Estado<span class="text-red-500">*</span></label
+      >
+      <select
+        v-model="form.estado"
+        class="mt-1 w-full border border-[#D8D8D8] rounded px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-[#B22222]"
+        required
+      >
+        <option value="activo">activo</option>
+        <option value="inactivo">inactivo</option>
+      </select>
+    </div>
+
     <div class="md:col-span-2 flex justify-end gap-2 mt-4">
       <button
         type="button"
@@ -159,6 +173,7 @@ const form = reactive({
   correo: "",
   fecha_nacimiento: "",
   genero: "",
+  estado: "",
 });
 
 const resetForm = () => {
@@ -169,10 +184,10 @@ const resetForm = () => {
   form.correo = "";
   form.fecha_nacimiento = "";
   form.genero = "";
+  form.estado = "";
   noTelefono.value = false;
   noEmail.value = false;
 };
-
 watch(
   () => props.paciente,
   (nuevoPaciente) => {
@@ -185,6 +200,8 @@ watch(
       form.correo = nuevoPaciente.correo || "";
       form.fecha_nacimiento = nuevoPaciente.fecha_nacimiento || "";
       form.genero = nuevoPaciente.genero || "";
+
+      form.estado = nuevoPaciente.estado || "";
 
       noTelefono.value = !form.telefono;
       noEmail.value = !form.correo;
@@ -214,6 +231,7 @@ const handleSubmit = async () => {
       correo: noEmail.value ? "" : form.correo,
       fecha_nacimiento: form.fecha_nacimiento,
       genero: form.genero,
+      estado: form.estado,
     };
 
     if (isEdicion.value && props.paciente.id_paciente) {
@@ -223,7 +241,6 @@ const handleSubmit = async () => {
     }
 
     emit("guardado", payload);
-
     window.location.reload();
   } catch (error) {
     console.error("Error al guardar paciente:", error.response?.data || error);

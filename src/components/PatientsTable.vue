@@ -139,13 +139,27 @@ export default {
       const edad = this.calcularEdad(p.fecha_nacimiento);
       const genero = p.genero.toUpperCase();
 
-      if (edad <= 3) return "/images/baby.png";
-      if (edad <= 18)
+      if (edad <= 2) {
+        return "/images/baby.png";
+      }
+
+      if (edad <= 11) {
         return genero === "M" ? "/images/boy.png" : "/images/girl.png";
-      if (edad >= 60)
+      }
+
+      if (edad <= 17) {
         return genero === "M"
-          ? "/images/grandfather.png"
-          : "/images/grandmother.png";
+          ? "/images/teenager_male.png"
+          : "/images/teenager_female.jpg";
+      }
+
+      if (edad >= 60) {
+        return genero === "M"
+          ? "/images/grandfather.jpg"
+          : "/images/grandmother.jpg";
+      }
+
+      // Adulto (18-59)
       return genero === "M" ? "/images/man.png" : "/images/woman.png";
     },
   },
