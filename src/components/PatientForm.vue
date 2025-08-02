@@ -10,7 +10,7 @@
       <input
         v-model="form.nombre"
         type="text"
-        class="mt-1 w-full border border-[#D8D8D8] rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#B22222]"
+        class="mt-1 w-full border border-[#D8D8D8] rounded px-3 py-2 text-gray-800"
         required
       />
     </div>
@@ -23,7 +23,7 @@
         <input
           v-model="form.apellidoP"
           type="text"
-          class="mt-1 w-full border border-[#D8D8D8] rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#B22222]"
+          class="mt-1 w-full border border-[#D8D8D8] rounded px-3 py-2 text-gray-800"
           required
         />
       </div>
@@ -34,7 +34,7 @@
         <input
           v-model="form.apellidoM"
           type="text"
-          class="mt-1 w-full border border-[#D8D8D8] rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#B22222]"
+          class="mt-1 w-full border border-[#D8D8D8] rounded px-3 py-2 text-gray-800"
         />
       </div>
     </div>
@@ -46,7 +46,7 @@
           v-model="form.telefono"
           type="tel"
           :disabled="noTelefono"
-          class="w-full border border-[#D8D8D8] rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#B22222]"
+          class="w-full border border-[#D8D8D8] rounded px-3 py-2 text-gray-800"
           placeholder="+52"
         />
       </div>
@@ -70,7 +70,7 @@
         v-model="form.correo"
         type="email"
         :disabled="noEmail"
-        class="mt-1 w-full border border-[#D8D8D8] rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#B22222]"
+        class="mt-1 w-full border border-[#D8D8D8] rounded px-3 py-2 text-gray-800"
         :required="!noEmail"
         placeholder="ejemplo@correo.com"
       />
@@ -95,7 +95,7 @@
       <input
         v-model="form.fecha_nacimiento"
         type="date"
-        class="mt-1 w-full border border-[#D8D8D8] rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#B22222]"
+        class="mt-1 w-full border border-[#D8D8D8] rounded px-3 py-2 text-gray-800"
         required
       />
     </div>
@@ -106,7 +106,7 @@
       >
       <select
         v-model="form.genero"
-        class="mt-1 w-full border border-[#D8D8D8] rounded px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-[#B22222]"
+        class="mt-1 w-full border border-[#D8D8D8] rounded px-3 py-2 bg-white text-gray-800"
         required
       >
         <option value="">Seleccione</option>
@@ -121,7 +121,7 @@
       >
       <select
         v-model="form.estado"
-        class="mt-1 w-full border border-[#D8D8D8] rounded px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-[#B22222]"
+        class="mt-1 w-full border border-[#D8D8D8] rounded px-3 py-2 bg-white text-gray-800"
         required
       >
         <option value="activo">activo</option>

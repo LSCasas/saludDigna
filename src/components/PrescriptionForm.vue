@@ -1,5 +1,5 @@
 <template>
-  <form class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+  <form class="space-y-6 mt-4">
     <!-- Subcomponente: Detalles del paciente -->
     <PatientDetails />
 
@@ -9,7 +9,7 @@
       <input
         type="text"
         placeholder="Ninguna / Detallar"
-        class="mt-1 w-full border border-[#D8D8D8] rounded px-3 py-2 focus:outline-none focus:ring-[#B22222]"
+        class="mt-1 w-full border border-[#D8D8D8] rounded px-3 py-2 text-gray-800"
       />
     </div>
 
@@ -21,7 +21,7 @@
       <input
         type="text"
         placeholder="Ej. 120/80"
-        class="mt-1 w-full border border-[#D8D8D8] rounded px-3 py-2 focus:outline-none focus:ring-[#B22222]"
+        class="mt-1 w-full border border-[#D8D8D8] rounded px-3 py-2 text-gray-800"
       />
     </div>
 
@@ -34,7 +34,7 @@
         type="number"
         min="0"
         placeholder="Ej. 72"
-        class="mt-1 w-full border border-[#D8D8D8] rounded px-3 py-2 focus:outline-none focus:ring-[#B22222]"
+        class="mt-1 w-full border border-[#D8D8D8] rounded px-3 py-2 text-gray-800"
       />
     </div>
 
@@ -46,7 +46,7 @@
       <input
         type="number"
         min="0"
-        class="mt-1 w-full border border-[#D8D8D8] rounded px-3 py-2 focus:outline-none focus:ring-[#B22222]"
+        class="mt-1 w-full border border-[#D8D8D8] rounded px-3 py-2 text-gray-800"
       />
     </div>
 
@@ -58,7 +58,7 @@
       <input
         type="number"
         step="0.1"
-        class="mt-1 w-full border border-[#D8D8D8] rounded px-3 py-2 focus:outline-none focus:ring-[#B22222]"
+        class="mt-1 w-full border border-[#D8D8D8] rounded px-3 py-2 text-gray-800"
       />
     </div>
 
@@ -69,7 +69,7 @@
         type="number"
         step="0.1"
         min="0"
-        class="mt-1 w-full border border-[#D8D8D8] rounded px-3 py-2 focus:outline-none focus:ring-[#B22222]"
+        class="mt-1 w-full border border-[#D8D8D8] rounded px-3 py-2 text-gray-800"
       />
     </div>
 
@@ -80,7 +80,7 @@
         type="number"
         step="0.1"
         min="0"
-        class="mt-1 w-full border border-[#D8D8D8] rounded px-3 py-2 focus:outline-none focus:ring-[#B22222]"
+        class="mt-1 w-full border border-[#D8D8D8] rounded px-3 py-2 text-gray-800"
       />
     </div>
 
@@ -89,7 +89,7 @@
       <label class="block text-sm font-medium text-gray-700">Diagnóstico</label>
       <input
         type="text"
-        class="mt-1 w-full border border-[#D8D8D8] rounded px-3 py-2 focus:outline-none focus:ring-[#B22222]"
+        class="mt-1 w-full border border-[#D8D8D8] rounded px-3 py-2 text-gray-800"
       />
     </div>
 
@@ -101,7 +101,7 @@
       <textarea
         rows="4"
         placeholder="Escribe las indicaciones..."
-        class="mt-1 w-full border border-[#D8D8D8] rounded px-3 py-2 focus:outline-none focus:ring-[#B22222]"
+        class="mt-1 w-full border border-[#D8D8D8] rounded px-3 py-2 text-gray-800"
       ></textarea>
     </div>
 
