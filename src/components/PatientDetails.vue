@@ -72,21 +72,6 @@
       </div>
     </div>
 
-    <!-- Género -->
-    <div>
-      <label class="block text-sm font-medium text-gray-700">Género</label>
-      <select
-        v-model="genero"
-        class="mt-1 w-full border border-[#D8D8D8] rounded px-3 py-2 text-gray-800"
-        disabled
-      >
-        <option value="Hombre">Hombre</option>
-        <option value="Mujer">Mujer</option>
-        <option value="Otro">Otro</option>
-        <option value="Prefiero no decir">Prefiero no decir</option>
-      </select>
-    </div>
-
     <!-- Edad -->
     <div>
       <label class="block text-sm font-medium text-gray-700">Edad</label>
@@ -97,6 +82,21 @@
         class="mt-1 w-full border border-[#D8D8D8] rounded px-3 py-2 text-gray-800"
         readonly
       />
+    </div>
+
+    <!-- Género -->
+    <div>
+      <label class="block text-sm font-medium text-gray-700">Género</label>
+      <select
+        v-model="genero"
+        class="mt-1 w-full border border-[#D8D8D8] rounded px-3 py-2 text-gray-800"
+        disabled
+      >
+        <option value="Masculino">Masculino</option>
+        <option value="Femenino">Femenino</option>
+        <option value="Otro">Otro</option>
+        <option value="Prefiero no decir">Prefiero no decir</option>
+      </select>
     </div>
   </div>
 </template>
@@ -159,9 +159,9 @@ const calcularEdad = (fechaNacimiento) => {
 const mapearGenero = (codigo) => {
   switch (codigo) {
     case "M":
-      return "Hombre";
+      return "Masculino";
     case "F":
-      return "Mujer";
+      return "Femenino";
     default:
       return "";
   }

@@ -3,65 +3,6 @@
     <!-- Subcomponente: Detalles del paciente -->
     <PatientDetails />
 
-    <!-- Alergia -->
-    <div>
-      <label class="block text-sm font-medium text-gray-700">Alergia</label>
-      <input
-        type="text"
-        placeholder="Ninguna / Detallar"
-        class="mt-1 w-full border border-[#D8D8D8] rounded px-3 py-2 text-gray-800"
-      />
-    </div>
-
-    <!-- Tensión arterial -->
-    <div>
-      <label class="block text-sm font-medium text-gray-700"
-        >Tensión arterial</label
-      >
-      <input
-        type="text"
-        placeholder="Ej. 120/80"
-        class="mt-1 w-full border border-[#D8D8D8] rounded px-3 py-2 text-gray-800"
-      />
-    </div>
-
-    <!-- Frecuencia cardíaca -->
-    <div>
-      <label class="block text-sm font-medium text-gray-700"
-        >Frecuencia cardíaca</label
-      >
-      <input
-        type="number"
-        min="0"
-        placeholder="Ej. 72"
-        class="mt-1 w-full border border-[#D8D8D8] rounded px-3 py-2 text-gray-800"
-      />
-    </div>
-
-    <!-- Frecuencia respiratoria -->
-    <div>
-      <label class="block text-sm font-medium text-gray-700"
-        >Frecuencia respiratoria</label
-      >
-      <input
-        type="number"
-        min="0"
-        class="mt-1 w-full border border-[#D8D8D8] rounded px-3 py-2 text-gray-800"
-      />
-    </div>
-
-    <!-- Temperatura -->
-    <div>
-      <label class="block text-sm font-medium text-gray-700"
-        >Temperatura (°C)</label
-      >
-      <input
-        type="number"
-        step="0.1"
-        class="mt-1 w-full border border-[#D8D8D8] rounded px-3 py-2 text-gray-800"
-      />
-    </div>
-
     <!-- Peso -->
     <div>
       <label class="block text-sm font-medium text-gray-700">Peso (kg)</label>
@@ -80,6 +21,65 @@
         type="number"
         step="0.1"
         min="0"
+        class="mt-1 w-full border border-[#D8D8D8] rounded px-3 py-2 text-gray-800"
+      />
+    </div>
+
+    <!-- Frecuencia respiratoria -->
+    <div>
+      <label class="block text-sm font-medium text-gray-700"
+        >Frecuencia respiratoria</label
+      >
+      <input
+        type="number"
+        min="0"
+        class="mt-1 w-full border border-[#D8D8D8] rounded px-3 py-2 text-gray-800"
+      />
+    </div>
+
+    <!-- Frecuencia cardíaca -->
+    <div>
+      <label class="block text-sm font-medium text-gray-700"
+        >Frecuencia cardíaca</label
+      >
+      <input
+        type="number"
+        min="0"
+        placeholder="Ej. 72"
+        class="mt-1 w-full border border-[#D8D8D8] rounded px-3 py-2 text-gray-800"
+      />
+    </div>
+
+    <!-- Temperatura -->
+    <div>
+      <label class="block text-sm font-medium text-gray-700"
+        >Temperatura (°C)</label
+      >
+      <input
+        type="number"
+        step="0.1"
+        class="mt-1 w-full border border-[#D8D8D8] rounded px-3 py-2 text-gray-800"
+      />
+    </div>
+
+    <!-- Tensión arterial -->
+    <div>
+      <label class="block text-sm font-medium text-gray-700"
+        >Tensión arterial</label
+      >
+      <input
+        type="text"
+        placeholder="Ej. 120/80"
+        class="mt-1 w-full border border-[#D8D8D8] rounded px-3 py-2 text-gray-800"
+      />
+    </div>
+
+    <!-- Alergia -->
+    <div>
+      <label class="block text-sm font-medium text-gray-700">Alergia</label>
+      <input
+        type="text"
+        placeholder="Ninguna / Detallar"
         class="mt-1 w-full border border-[#D8D8D8] rounded px-3 py-2 text-gray-800"
       />
     </div>
