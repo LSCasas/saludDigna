@@ -4,9 +4,9 @@
     <div class="px-6 py-4 flex justify-between items-center">
       <PatientsHeader />
       <PatientStatusFilter />
-      <PatientSearch />
+      <PatientSearch v-model="search" />
     </div>
-    <PatientsTable />
+    <PatientsTable :searchTerm="search" />
   </div>
 </template>
 
@@ -24,6 +24,11 @@ export default {
     PatientSearch,
     PatientsTable,
     PatientStatusFilter,
+  },
+  data() {
+    return {
+      search: "",
+    };
   },
 };
 </script>

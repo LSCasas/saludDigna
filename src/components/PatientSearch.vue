@@ -2,7 +2,8 @@
   <div class="relative w-full max-w-xs">
     <input
       type="text"
-      v-model="searchTerm"
+      :value="searchTerm"
+      @input="handleInput"
       placeholder="Nombre, apellido, doc., tlf..."
       class="w-full px-4 py-2 pr-10 text-sm border border-[#D8D8D8] rounded-lg focus:outline-none focus:ring-1 focus:ring-[#B22222]"
     />
@@ -30,10 +31,24 @@
 <script>
 export default {
   name: "PatientSearch",
+  props: {
+    modelValue: String,
+  },
   data() {
     return {
-      searchTerm: "",
+      searchTerm: this.modelValue || "",
     };
+  },
+  watch: {
+    modelValue(val) {
+      this.searchTerm = val;
+    },
+  },
+  methods: {
+    handleInput(e) {
+      this.searchTerm = e.target.value;
+      this.$emit("update:modelValue", this.searchTerm);
+    },
   },
 };
 </script>

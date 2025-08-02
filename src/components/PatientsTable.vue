@@ -99,6 +99,12 @@ import { getPacienteById } from "../api/pacientes";
 export default {
   name: "PatientsTable",
   components: { PatientDetail, Pagination },
+  props: {
+    searchTerm: {
+      type: String,
+      default: "",
+    },
+  },
   data() {
     return {
       pacientes: [],
@@ -109,8 +115,18 @@ export default {
   },
   computed: {
     pacientesFiltrados() {
+      const termino = this.searchTerm.toLowerCase().trim();
       return this.pacientes
         .filter((p) => p.estado?.toLowerCase() === "activo")
+        .filter(
+          (p) =>
+            !termino ||
+            `${p.nombre} ${p.apellidoP} ${p.apellidoM}`
+              .toLowerCase()
+              .includes(termino) ||
+            p.documento?.toLowerCase().includes(termino) ||
+            p.telefono?.toLowerCase().includes(termino)
+        )
         .reverse();
     },
     totalPaginas() {
