@@ -4,7 +4,7 @@
       @click="show = !show"
       class="flex items-center cursor-pointer gap-1 px-2 py-1 text-xs bg-gray-100 text-gray-700 rounded hover:bg-gray-200"
     >
-      {{ selected }}
+      {{ modelValue }}
       <svg
         class="w-3 h-3"
         fill="none"
@@ -42,21 +42,26 @@
 <script>
 export default {
   name: "PatientStatusFilter",
+  props: {
+    modelValue: {
+      type: String,
+      default: "Activos",
+    },
+  },
   data() {
     return {
-      selected: "Activos",
       show: false,
       options: ["Activos", "Inactivos"],
     };
   },
   computed: {
     filteredOptions() {
-      return this.options.filter((opt) => opt !== this.selected);
+      return this.options.filter((opt) => opt !== this.modelValue);
     },
   },
   methods: {
     select(option) {
-      this.selected = option;
+      this.$emit("update:modelValue", option);
       this.show = false;
     },
   },

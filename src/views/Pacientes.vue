@@ -3,10 +3,10 @@
     <Navbar />
     <div class="px-6 py-4 flex justify-between items-center">
       <PatientsHeader />
-      <PatientStatusFilter />
+      <PatientStatusFilter v-model="statusFilter" />
       <PatientSearch v-model="search" />
     </div>
-    <PatientsTable :searchTerm="search" />
+    <PatientsTable :searchTerm="search" :statusFilter="statusFilter" />
   </div>
 </template>
 
@@ -28,6 +28,7 @@ export default {
   data() {
     return {
       search: "",
+      statusFilter: "Activos",
     };
   },
 };

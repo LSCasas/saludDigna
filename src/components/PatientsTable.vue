@@ -104,6 +104,10 @@ export default {
       type: String,
       default: "",
     },
+    statusFilter: {
+      type: String,
+      default: "Activos",
+    },
   },
   data() {
     return {
@@ -116,8 +120,10 @@ export default {
   computed: {
     pacientesFiltrados() {
       const termino = this.searchTerm.toLowerCase().trim();
+      const estadoBuscado =
+        this.statusFilter.toLowerCase() === "activos" ? "activo" : "inactivo";
       return this.pacientes
-        .filter((p) => p.estado?.toLowerCase() === "activo")
+        .filter((p) => p.estado?.toLowerCase() === estadoBuscado)
         .filter(
           (p) =>
             !termino ||
