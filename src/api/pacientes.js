@@ -65,3 +65,27 @@ export const updatePaciente = async (id, pacienteData) => {
     throw error;
   }
 };
+
+export const countPacientesActivos = async () => {
+  try {
+    const response = await axios.get("/pacientes/activos/count");
+    return response.data.activos;
+  } catch (error) {
+    const message =
+      error.response?.data?.message || "Error al contar pacientes activos";
+    toast.error(message);
+    throw error;
+  }
+};
+
+export const countPacientesInactivos = async () => {
+  try {
+    const response = await axios.get("/pacientes/inactivos/count");
+    return response.data.inactivos;
+  } catch (error) {
+    const message =
+      error.response?.data?.message || "Error al contar pacientes inactivos";
+    toast.error(message);
+    throw error;
+  }
+};

@@ -2,7 +2,7 @@
   <div>
     <Navbar />
     <div class="px-6 py-4 flex justify-between items-center">
-      <PatientsHeader :totalPacientes="3" />
+      <PatientsHeader />
       <PatientSearch />
     </div>
     <PatientsTable />
