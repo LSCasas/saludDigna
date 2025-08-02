@@ -1,12 +1,13 @@
 <template>
-  <form class="space-y-6 mt-4">
+  <form @submit.prevent="handleSubmit" class="space-y-6 mt-4">
     <!-- Subcomponente: Detalles del paciente -->
-    <PatientDetails />
+    <PatientDetails @pacienteSeleccionado="handlePacienteSeleccionado" />
 
     <!-- Peso -->
     <div>
       <label class="block text-sm font-medium text-gray-700">Peso (kg)</label>
       <input
+        v-model="peso"
         type="number"
         step="0.1"
         min="0"
@@ -18,6 +19,7 @@
     <div>
       <label class="block text-sm font-medium text-gray-700">Talla (cm)</label>
       <input
+        v-model="talla"
         type="number"
         step="0.1"
         min="0"
@@ -31,6 +33,7 @@
         >Frecuencia respiratoria</label
       >
       <input
+        v-model="frecuenciaRespiratoria"
         type="number"
         min="0"
         class="mt-1 w-full border border-[#D8D8D8] rounded px-3 py-2 text-gray-800"
@@ -43,6 +46,7 @@
         >Frecuencia cardíaca</label
       >
       <input
+        v-model="frecuenciaCardiaca"
         type="number"
         min="0"
         placeholder="Ej. 72"
@@ -56,6 +60,7 @@
         >Temperatura (°C)</label
       >
       <input
+        v-model="temperatura"
         type="number"
         step="0.1"
         class="mt-1 w-full border border-[#D8D8D8] rounded px-3 py-2 text-gray-800"
@@ -68,6 +73,7 @@
         >Tensión arterial</label
       >
       <input
+        v-model="tensionArterial"
         type="text"
         placeholder="Ej. 120/80"
         class="mt-1 w-full border border-[#D8D8D8] rounded px-3 py-2 text-gray-800"
@@ -78,6 +84,7 @@
     <div>
       <label class="block text-sm font-medium text-gray-700">Alergia</label>
       <input
+        v-model="alergia"
         type="text"
         placeholder="Ninguna / Detallar"
         class="mt-1 w-full border border-[#D8D8D8] rounded px-3 py-2 text-gray-800"
@@ -88,6 +95,7 @@
     <div>
       <label class="block text-sm font-medium text-gray-700">Diagnóstico</label>
       <input
+        v-model="diagnostico"
         type="text"
         class="mt-1 w-full border border-[#D8D8D8] rounded px-3 py-2 text-gray-800"
       />
@@ -99,6 +107,7 @@
         >Indicaciones</label
       >
       <textarea
+        v-model="indicaciones"
         rows="4"
         placeholder="Escribe las indicaciones..."
         class="mt-1 w-full border border-[#D8D8D8] rounded px-3 py-2 text-gray-800"
@@ -124,5 +133,63 @@
 </template>
 
 <script setup>
+import { ref } from "vue";
 import PatientDetails from "./PatientDetails.vue";
+import { createReceta } from "../api/recetas.js";
+
+const idPaciente = ref(null);
+const edad = ref(null);
+const peso = ref("");
+const talla = ref("");
+const frecuenciaRespiratoria = ref("");
+const frecuenciaCardiaca = ref("");
+const temperatura = ref("");
+const tensionArterial = ref("");
+const alergia = ref("");
+const diagnostico = ref("");
+const indicaciones = ref("");
+
+const handlePacienteSeleccionado = ({ id, edad: edadPaciente }) => {
+  idPaciente.value = id;
+  edad.value = edadPaciente;
+};
+
+const handleSubmit = async () => {
+  if (!idPaciente.value) {
+    alert("Selecciona un paciente antes de guardar la receta.");
+    return;
+  }
+
+  const recetaData = {
+    id_paciente: idPaciente.value,
+    fecha_receta: new Date().toISOString().split("T")[0],
+    edad: edad.value,
+    peso: peso.value?.toString() || null,
+    talla: talla.value?.toString() || null,
+    frecuencia_respiratoria: frecuenciaRespiratoria.value?.toString() || null,
+    frecuencia_cardiaca: frecuenciaCardiaca.value?.toString() || null,
+    temperatura: temperatura.value?.toString() || null,
+    tension_arterial: tensionArterial.value || null,
+    alergia: alergia.value || null,
+    diagnostico: diagnostico.value || "",
+    indicaciones: indicaciones.value || null,
+  };
+
+  try {
+    await createReceta(recetaData);
+    peso.value = "";
+    talla.value = "";
+    frecuenciaRespiratoria.value = "";
+    frecuenciaCardiaca.value = "";
+    temperatura.value = "";
+    tensionArterial.value = "";
+    alergia.value = "";
+    diagnostico.value = "";
+    indicaciones.value = "";
+
+    window.location.reload();
+  } catch (error) {
+    console.error("Error al guardar receta", error);
+  }
+};
 </script>

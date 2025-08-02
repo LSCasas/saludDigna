@@ -103,6 +103,7 @@
 
 <script setup>
 import { ref } from "vue";
+const emit = defineEmits(["pacienteSeleccionado"]);
 import { getPacientes, getPacienteById } from "../api/pacientes.js";
 
 const pacientes = ref([]);
@@ -180,6 +181,11 @@ const seleccionarPaciente = async (paciente) => {
     edad.value = data.fecha_nacimiento
       ? calcularEdad(data.fecha_nacimiento)
       : null;
+
+    emit("pacienteSeleccionado", {
+      id: paciente.id,
+      edad: edad.value,
+    });
 
     search.value = `${nombre.value} ${apellidoP.value} ${apellidoM.value}`;
     mostrarLista.value = false;
