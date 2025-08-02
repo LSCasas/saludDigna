@@ -134,8 +134,9 @@
 
 <script setup>
 import { ref } from "vue";
+import { jsPDF } from "jspdf";
 import PatientDetails from "./PatientDetails.vue";
-import { createReceta } from "../api/recetas.js";
+import { createReceta, getRecetaCompletaById } from "../api/recetas.js";
 
 const idPaciente = ref(null);
 const edad = ref(null);
@@ -152,6 +153,53 @@ const indicaciones = ref("");
 const handlePacienteSeleccionado = ({ id, edad: edadPaciente }) => {
   idPaciente.value = id;
   edad.value = edadPaciente;
+};
+
+const generarPDF = (data) => {
+  const doc = new jsPDF();
+
+  // Título
+  doc.setFontSize(18);
+  doc.text("Receta Médica", 105, 15, null, null, "center");
+
+  // Datos Paciente
+  doc.setFontSize(14);
+  doc.text("Datos del Paciente:", 10, 30);
+  doc.setFontSize(12);
+  doc.text(`Nombre: ${data.paciente.nombre}`, 10, 40);
+  doc.text(`Apellido Paterno: ${data.paciente.apellidoP}`, 10, 48);
+  doc.text(`Apellido Materno: ${data.paciente.apellidoM}`, 10, 56);
+
+  // Datos Receta
+  doc.setFontSize(14);
+  doc.text("Datos de la Receta:", 10, 70);
+  doc.setFontSize(12);
+  let y = 78;
+  const salto = 8;
+
+  const campos = [
+    { label: "Fecha receta", value: data.receta.fecha_receta },
+    { label: "Edad", value: data.receta.edad },
+    { label: "Peso (kg)", value: data.receta.peso },
+    { label: "Talla (cm)", value: data.receta.talla },
+    {
+      label: "Frecuencia respiratoria",
+      value: data.receta.frecuencia_respiratoria,
+    },
+    { label: "Frecuencia cardíaca", value: data.receta.frecuencia_cardiaca },
+    { label: "Temperatura (°C)", value: data.receta.temperatura },
+    { label: "Tensión arterial", value: data.receta.tension_arterial },
+    { label: "Alergia", value: data.receta.alergia },
+    { label: "Diagnóstico", value: data.receta.diagnostico },
+    { label: "Indicaciones", value: data.receta.indicaciones },
+  ];
+
+  campos.forEach(({ label, value }) => {
+    doc.text(`${label}: ${value ?? "-"}`, 10, y);
+    y += salto;
+  });
+
+  doc.save(`Receta_${data.paciente.nombre}_${data.paciente.apellidoP}.pdf`);
 };
 
 const handleSubmit = async () => {
@@ -176,16 +224,10 @@ const handleSubmit = async () => {
   };
 
   try {
-    await createReceta(recetaData);
-    peso.value = "";
-    talla.value = "";
-    frecuenciaRespiratoria.value = "";
-    frecuenciaCardiaca.value = "";
-    temperatura.value = "";
-    tensionArterial.value = "";
-    alergia.value = "";
-    diagnostico.value = "";
-    indicaciones.value = "";
+    const nuevaReceta = await createReceta(recetaData);
+    const recetaCompleta = await getRecetaCompletaById(nuevaReceta.id_receta);
+
+    generarPDF(recetaCompleta);
 
     window.location.reload();
   } catch (error) {

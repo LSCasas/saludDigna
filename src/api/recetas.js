@@ -74,3 +74,14 @@ export const deleteReceta = async (id) => {
     throw error;
   }
 };
+
+export const getRecetaCompletaById = async (id) => {
+  try {
+    const response = await axios.get(`/recetas/${id}/completa`);
+    return response.data;
+  } catch (error) {
+    const message = error.response?.data?.message || "Receta no encontrada";
+    toast.error(message);
+    throw error;
+  }
+};
