@@ -1,9 +1,9 @@
 <template>
   <div class="flex items-center justify-between pb-4">
-    <h2 class="text-lg text-[#1F2937] font-semibold">
+    <h2 class="text-lg text-[#1F2937] font-normal">
       Pacientes
       <span class="text-[#6B7280]">
-        | {{ activos }} activos · {{ inactivos }} inactivos
+        | activos · {{ activos }} inactivos · {{ inactivos }}
       </span>
     </h2>
   </div>

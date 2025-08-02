@@ -3,6 +3,7 @@
     <Navbar />
     <div class="px-6 py-4 flex justify-between items-center">
       <PatientsHeader />
+      <PatientStatusFilter />
       <PatientSearch />
     </div>
     <PatientsTable />
@@ -11,6 +12,7 @@
 
 <script>
 import Navbar from "../components/Navbar.vue";
+import PatientStatusFilter from "../components/PatientStatusFilter.vue";
 import PatientsHeader from "../components/PatientsHeader.vue";
 import PatientSearch from "../components/PatientSearch.vue";
 import PatientsTable from "../components/PatientsTable.vue";
@@ -21,6 +23,7 @@ export default {
     PatientsHeader,
     PatientSearch,
     PatientsTable,
+    PatientStatusFilter,
   },
 };
 </script>
