@@ -1,44 +1,53 @@
 <template>
   <div class="px-6 relative">
-    <table
-      class="w-full border border-gray-300 rounded-lg overflow-hidden text-sm"
-    >
-      <thead class="bg-gray-100 text-red-700 text-left">
-        <tr>
-          <th class="px-4 py-3">Paciente</th>
-          <th class="px-4 py-3">Última cita</th>
-          <th class="px-4 py-3">Próxima cita</th>
-        </tr>
-      </thead>
-      <tbody class="text-gray-700">
-        <tr
-          v-for="paciente in pacientes"
-          :key="paciente.id_paciente"
-          class="border-t border-gray-300 cursor-pointer hover:bg-gray-100 transition-colors"
-          @click="seleccionarPaciente(paciente.id_paciente)"
-        >
-          <td class="px-4 py-3 flex items-center gap-3">
-            <img
-              :src="getImagen(paciente)"
-              alt="Foto"
-              class="w-10 h-10 rounded-full object-cover"
-            />
-            <div>
-              <div class="font-semibold">
-                {{ paciente.nombre }} {{ paciente.apellidoP }}
-                {{ paciente.apellidoM }}
+    <!-- Tabla con scroll -->
+    <div class="h-[65vh] overflow-y-auto border border-gray-300 rounded-lg">
+      <table class="w-full text-sm">
+        <thead class="bg-gray-100 text-red-700 text-left sticky top-0 z-10">
+          <tr>
+            <th class="px-4 py-3">Paciente</th>
+            <th class="px-4 py-3">Última cita</th>
+            <th class="px-4 py-3">Próxima cita</th>
+          </tr>
+        </thead>
+        <tbody class="text-gray-700">
+          <tr
+            v-for="paciente in pacientesPaginados"
+            :key="paciente.id_paciente"
+            class="border-t border-gray-300 cursor-pointer hover:bg-gray-100 transition-colors"
+            @click="seleccionarPaciente(paciente.id_paciente)"
+          >
+            <td class="px-4 py-3 flex items-center gap-3">
+              <img
+                :src="getImagen(paciente)"
+                alt="Foto"
+                class="w-10 h-10 rounded-full object-cover"
+              />
+              <div>
+                <div class="font-semibold">
+                  {{ paciente.nombre }} {{ paciente.apellidoP }}
+                  {{ paciente.apellidoM }}
+                </div>
+                <div class="text-xs text-gray-500 capitalize">
+                  {{ paciente.genero }} •
+                  {{ calcularEdad(paciente.fecha_nacimiento) }} años
+                </div>
               </div>
-              <div class="text-xs text-gray-500 capitalize">
-                {{ paciente.genero }} •
-                {{ calcularEdad(paciente.fecha_nacimiento) }} años
-              </div>
-            </div>
-          </td>
-          <td class="px-4 py-3">--</td>
-          <td class="px-4 py-3">--</td>
-        </tr>
-      </tbody>
-    </table>
+            </td>
+            <td class="px-4 py-3">--</td>
+            <td class="px-4 py-3">--</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Paginación -->
+    <Pagination
+      v-if="totalPaginas > 1"
+      v-model:currentPage="paginaActual"
+      :totalPages="totalPaginas"
+      class="fixed bottom-4 right-6 z-30 mb-5"
+    />
 
     <!-- Overlay -->
     <transition
@@ -69,7 +78,6 @@
         v-if="pacienteSeleccionado"
         class="fixed right-0 top-0 h-full w-full max-w-2xl bg-white shadow-2xl p-6 z-50"
       >
-        <!-- Botón cerrar (X) -->
         <button
           @click="cerrarDrawer"
           class="text-3xl font-bold absolute top-4 right-4 cursor-pointer text-gray-700 hover:text-red-600"
@@ -77,7 +85,6 @@
         >
           &times;
         </button>
-
         <PatientDetail :paciente="pacienteSeleccionado" />
       </div>
     </transition>
@@ -86,16 +93,38 @@
 
 <script>
 import PatientDetail from "./PatientDetail.vue";
+import Pagination from "./Pagination.vue";
 import { getPacienteById } from "../api/pacientes";
 
 export default {
   name: "PatientsTable",
-  components: { PatientDetail },
+  components: { PatientDetail, Pagination },
   data() {
     return {
       pacientes: [],
       pacienteSeleccionado: null,
+      paginaActual: 1,
+      pacientesPorPagina: 10,
     };
+  },
+  computed: {
+    pacientesFiltrados() {
+      return this.pacientes
+        .filter((p) => p.estado?.toLowerCase() === "activo")
+        .reverse();
+    },
+    totalPaginas() {
+      return Math.ceil(
+        this.pacientesFiltrados.length / this.pacientesPorPagina
+      );
+    },
+    pacientesPaginados() {
+      const start = (this.paginaActual - 1) * this.pacientesPorPagina;
+      return this.pacientesFiltrados.slice(
+        start,
+        start + this.pacientesPorPagina
+      );
+    },
   },
   async mounted() {
     try {
@@ -112,11 +141,7 @@ export default {
         const edad = this.calcularEdad(paciente.fecha_nacimiento);
         paciente.edad = edad;
         paciente.imagen = this.getImagen(paciente);
-
-        if (!paciente.citas) {
-          paciente.citas = [];
-        }
-
+        if (!paciente.citas) paciente.citas = [];
         this.pacienteSeleccionado = paciente;
       } catch (e) {
         console.error("Error al seleccionar paciente:", e);
@@ -130,36 +155,23 @@ export default {
       const hoy = new Date();
       let edad = hoy.getFullYear() - nacimiento.getFullYear();
       const m = hoy.getMonth() - nacimiento.getMonth();
-      if (m < 0 || (m === 0 && hoy.getDate() < nacimiento.getDate())) {
-        edad--;
-      }
+      if (m < 0 || (m === 0 && hoy.getDate() < nacimiento.getDate())) edad--;
       return edad;
     },
     getImagen(p) {
       const edad = this.calcularEdad(p.fecha_nacimiento);
       const genero = p.genero.toUpperCase();
-
-      if (edad <= 2) {
-        return "/images/baby.png";
-      }
-
-      if (edad <= 11) {
+      if (edad <= 2) return "/images/baby.png";
+      if (edad <= 11)
         return genero === "M" ? "/images/boy.png" : "/images/girl.png";
-      }
-
-      if (edad <= 17) {
+      if (edad <= 17)
         return genero === "M"
           ? "/images/teenager_male.png"
           : "/images/teenager_female.jpg";
-      }
-
-      if (edad >= 60) {
+      if (edad >= 60)
         return genero === "M"
           ? "/images/grandfather.jpg"
           : "/images/grandmother.jpg";
-      }
-
-      // Adulto (18-59)
       return genero === "M" ? "/images/man.png" : "/images/woman.png";
     },
   },
