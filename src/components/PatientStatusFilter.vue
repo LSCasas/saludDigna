@@ -2,7 +2,7 @@
   <div class="relative">
     <button
       @click="show = !show"
-      class="flex items-center gap-1 px-2 py-1 text-xs bg-gray-100 text-gray-700 rounded hover:bg-gray-200"
+      class="flex items-center cursor-pointer gap-1 px-2 py-1 text-xs bg-gray-100 text-gray-700 rounded hover:bg-gray-200"
     >
       {{ selected }}
       <svg
