@@ -10,7 +10,7 @@
     <div>
       <label for="correo" class="block mb-1 text-gray-700">Correo</label>
       <input
-        type="text"
+        type="email"
         id="correo"
         v-model="correo"
         required
