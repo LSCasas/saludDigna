@@ -63,7 +63,7 @@ export default {
     try {
       const response = await getRecetasPorPaciente(this.idPaciente);
       this.paciente = response.paciente;
-      this.recetas = response.recetas || [];
+      this.recetas = (response.recetas || []).reverse(); // <--- Aquí inviertes el orden
     } catch (error) {
       console.error("Error al cargar recetas:", error);
       this.recetas = [];

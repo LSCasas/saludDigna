@@ -1,6 +1,6 @@
 <template>
   <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-    <!-- Buscar y agregar paciente -->
+    <!-- Buscar paciente -->
     <div class="md:col-span-2">
       <label class="block text-sm font-medium text-gray-700 mb-1">
         Paciente
@@ -122,12 +122,14 @@ const mostrarPacientes = async () => {
   if (!pacientesCargados.value) {
     try {
       const data = await getPacientes();
-      pacientes.value = data.map((p) => ({
-        id: p.id_paciente,
-        firstName: p.nombre,
-        lastNameP: p.apellidoP,
-        lastNameM: p.apellidoM,
-      }));
+      pacientes.value = data
+        .filter((p) => p.estado === "activo")
+        .map((p) => ({
+          id: p.id_paciente,
+          firstName: p.nombre,
+          lastNameP: p.apellidoP,
+          lastNameM: p.apellidoM,
+        }));
       pacientesFiltrados.value = pacientes.value;
       pacientesCargados.value = true;
     } catch (error) {
