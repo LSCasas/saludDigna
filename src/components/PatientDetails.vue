@@ -15,6 +15,18 @@
           class="w-full border border-[#D8D8D8] rounded px-3 py-2 text-gray-800"
         />
       </div>
+      <div class="flex items-center mt-2 text-sm text-gray-700">
+        <input
+          id="new-patient"
+          type="radio"
+          name="patientOption"
+          class="text-[#B22222] focus:ring-[#B22222] border-[#D8D8D8] mr-2"
+          @change="$emit('agregarPaciente')"
+        />
+        <label for="new-patient" class="cursor-pointer">
+          Agregar paciente
+        </label>
+      </div>
     </div>
 
     <!-- Lista de pacientes -->
