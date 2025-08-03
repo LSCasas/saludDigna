@@ -20,7 +20,7 @@
       <AppointmentsSection :citas="citas" />
     </div>
     <div v-else-if="activeTab === 'Consultas'">
-      <PrescriptionsSection :citas="citas" />
+      <PrescriptionsSection :idPaciente="paciente.id_paciente" />
     </div>
   </div>
 </template>
@@ -38,6 +38,10 @@ export default {
   props: {
     citas: {
       type: Array,
+      required: true,
+    },
+    paciente: {
+      type: Object,
       required: true,
     },
   },

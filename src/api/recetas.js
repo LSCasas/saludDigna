@@ -85,3 +85,15 @@ export const getRecetaCompletaById = async (id) => {
     throw error;
   }
 };
+
+export const getRecetasPorPaciente = async (idPaciente) => {
+  try {
+    const response = await axios.get(`/recetas/paciente/${idPaciente}`);
+    return response.data;
+  } catch (error) {
+    const message =
+      error.response?.data?.message || "Error al obtener recetas del paciente";
+    toast.error(message);
+    throw error;
+  }
+};

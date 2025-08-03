@@ -10,13 +10,13 @@
       @guardado="handlePacienteActualizado"
     />
 
-    <PatientTabs :citas="paciente.citas || []" />
+    <PatientTabs :citas="paciente.citas" :paciente="paciente" />
   </div>
 </template>
 
 <script>
 import PatientInfo from "./PatientInfo.vue";
-import PatientForm from "./PatientForm.vue"; // Tu formulario
+import PatientForm from "./PatientForm.vue";
 import PatientTabs from "./PatientTabs.vue";
 
 export default {
