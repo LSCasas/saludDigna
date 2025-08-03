@@ -93,7 +93,7 @@ export const getRecetasPorPaciente = async (idPaciente) => {
   } catch (error) {
     const message =
       error.response?.data?.message || "Error al obtener recetas del paciente";
-    toast.error(message);
+    console.error(message);
     throw error;
   }
 };
