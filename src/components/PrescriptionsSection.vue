@@ -19,10 +19,11 @@
           <tr
             v-for="receta in recetas"
             :key="receta.id_receta"
-            class="even:bg-[#F9F9F9] odd:bg-white text-gray-800 border-b border-[#D8D8D8]"
+            class="even:bg-[#F9F9F9] odd:bg-white text-gray-800 border-b border-[#D8D8D8] cursor-pointer hover:bg-gray-200"
+            @click="handleClickReceta(receta.id_receta)"
           >
             <td class="p-3">{{ receta.fecha_receta }}</td>
-            <td class="p-3">{{ receta.nombre_paciente }}</td>
+            <td class="p-3">{{ nombreCompleto }}</td>
           </tr>
         </tbody>
       </table>
@@ -34,7 +35,8 @@
 </template>
 
 <script>
-import { getRecetasPorPaciente } from "../api/recetas";
+import { getRecetasPorPaciente, getRecetaCompletaById } from "../api/recetas";
+import { pdfReceta } from "../utils/pdfReceta";
 
 export default {
   name: "PrescriptionsSection",
@@ -47,26 +49,37 @@ export default {
   data() {
     return {
       recetas: [],
+      paciente: null,
       loading: true,
     };
+  },
+  computed: {
+    nombreCompleto() {
+      if (!this.paciente) return "";
+      return `${this.paciente.nombre} ${this.paciente.apellidoP} ${this.paciente.apellidoM}`;
+    },
   },
   async mounted() {
     try {
       const response = await getRecetasPorPaciente(this.idPaciente);
-      const { paciente, recetas } = response;
-
-      const nombreCompleto = `${paciente.nombre} ${paciente.apellidoP} ${paciente.apellidoM}`;
-
-      this.recetas = recetas.map((receta) => ({
-        ...receta,
-        nombre_paciente: nombreCompleto,
-      }));
+      this.paciente = response.paciente;
+      this.recetas = response.recetas || [];
     } catch (error) {
       console.error("Error al cargar recetas:", error);
       this.recetas = [];
     } finally {
       this.loading = false;
     }
+  },
+  methods: {
+    async handleClickReceta(idReceta) {
+      try {
+        const recetaCompleta = await getRecetaCompletaById(idReceta);
+        pdfReceta(recetaCompleta);
+      } catch (error) {
+        console.error("Error al obtener receta completa:", error);
+      }
+    },
   },
 };
 </script>
