@@ -241,7 +241,7 @@ const handleSubmit = async () => {
     }
 
     emit("guardado", payload);
-    //window.location.reload();
+    resetForm();
   } catch (error) {
     console.error("Error al guardar paciente:", error.response?.data || error);
   }
