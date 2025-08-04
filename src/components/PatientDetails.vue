@@ -141,7 +141,16 @@ const mostrarPacientes = async () => {
           firstName: p.nombre,
           lastNameP: p.apellidoP,
           lastNameM: p.apellidoM,
-        }));
+        }))
+        .sort((a, b) => {
+          const lastNameA = a.lastNameP.toLowerCase();
+          const lastNameB = b.lastNameP.toLowerCase();
+          if (lastNameA < lastNameB) return -1;
+          if (lastNameA > lastNameB) return 1;
+          return a.firstName
+            .toLowerCase()
+            .localeCompare(b.firstName.toLowerCase());
+        });
       pacientesFiltrados.value = pacientes.value;
       pacientesCargados.value = true;
     } catch (error) {

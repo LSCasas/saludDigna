@@ -145,10 +145,30 @@ const form = ref({
   nota: "",
 });
 
-const onPacienteGuardado = (nuevoPaciente) => {
-  idPacienteSeleccionado.value = nuevoPaciente.id_paciente;
-  search.value = `${nuevoPaciente.nombre} ${nuevoPaciente.apellidoP} ${nuevoPaciente.apellidoM}`;
+const onPacienteGuardado = async (nuevoPaciente) => {
   mostrarFormularioPaciente.value = false;
+  search.value = "";
+  idPacienteSeleccionado.value = null;
+
+  // Cerrar la lista de pacientes
+  mostrarLista.value = false;
+
+  // Recargar lista de pacientes sin recargar toda la página
+  try {
+    const data = await getPacientes();
+    pacientes.value = data
+      .filter((p) => p.estado === "activo")
+      .map((p) => ({
+        id: p.id_paciente,
+        firstName: p.nombre,
+        lastNameP: p.apellidoP,
+        lastNameM: p.apellidoM,
+      }));
+
+    pacientesFiltrados.value = pacientes.value;
+  } catch (error) {
+    console.error("Error recargando pacientes:", error);
+  }
 };
 
 function recargarPagina() {
@@ -166,7 +186,19 @@ const mostrarPacientes = async () => {
           firstName: p.nombre,
           lastNameP: p.apellidoP,
           lastNameM: p.apellidoM,
-        }));
+        }))
+        .sort((a, b) => {
+          const lastNameA = `${a.lastNameP} ${a.lastNameM}`.toLowerCase();
+          const lastNameB = `${b.lastNameP} ${b.lastNameM}`.toLowerCase();
+
+          if (lastNameA < lastNameB) return -1;
+          if (lastNameA > lastNameB) return 1;
+
+          // Si los apellidos son iguales, ordena por nombre
+          return a.firstName
+            .toLowerCase()
+            .localeCompare(b.firstName.toLowerCase());
+        });
       pacientesFiltrados.value = pacientes.value;
       pacientesCargados.value = true;
     } catch (error) {
