@@ -1,13 +1,13 @@
 <template>
-  <div class="overflow-x-auto px-6 pb-6">
+  <div class="overflow-y-auto px-6 pb-6">
     <table class="min-w-full border border-[#D8D8D8] text-sm">
       <thead class="bg-[#F9F9F9] text-[#B22222]">
         <tr>
-          <th class="w-24 px-4 py-2 text-left">Hora</th>
+          <th class="px-4 py-2 text-left">Hora</th>
           <th
             v-for="(dia, index) in diasSemana"
             :key="index"
-            class="px-4 py-2 text-left"
+            class="px-1 py-2 text-left"
           >
             {{ dia.nombre }}<br />
             <span class="text-xs text-gray-500">{{ dia.fecha }}</span>
