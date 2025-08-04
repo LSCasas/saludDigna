@@ -16,16 +16,16 @@
       @change="cambiarFecha"
     />
 
-    <!-- Botón Hoy -->
+    <!-- Botón Hoy más pequeño -->
     <button
-      class="bg-[#B22222] cursor-pointer text-white px-4 py-2 rounded-md hover:opacity-90"
+      class="bg-[#B22222] text-white text-sm px-2 py-1 rounded hover:opacity-90"
       @click="irAHoy"
     >
       Hoy
     </button>
 
-    <!-- Rango de la semana -->
-    <span class="text-gray-700 font-medium">
+    <!-- Rango de la semana solo visible en pantallas >= sm -->
+    <span class="text-gray-700 font-normal hidden sm:inline">
       {{ rangoTexto }}
     </span>
   </div>
@@ -33,7 +33,6 @@
 
 <script>
 import { format, startOfWeek, endOfWeek } from "date-fns";
-import { es } from "date-fns/locale";
 
 export default {
   name: "CalendarioHeader",
@@ -47,11 +46,7 @@ export default {
     rangoTexto() {
       const inicio = startOfWeek(this.fechaSeleccionada, { weekStartsOn: 1 });
       const fin = endOfWeek(this.fechaSeleccionada, { weekStartsOn: 1 });
-      return `${format(inicio, "dd MMM yyyy", { locale: es })} - ${format(
-        fin,
-        "dd MMM yyyy",
-        { locale: es }
-      )}`;
+      return `${format(inicio, "dd/MM/yyyy")} - ${format(fin, "dd/MM/yyyy")}`;
     },
     fechaInput() {
       return format(this.fechaSeleccionada, "yyyy-MM-dd");
