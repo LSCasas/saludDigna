@@ -109,6 +109,7 @@
       <input
         v-model="form.fecha_cita"
         type="date"
+        :min="hoy"
         class="mt-1 w-full border border-[#D8D8D8] rounded px-3 py-2 text-gray-700"
         required
       />
@@ -120,8 +121,11 @@
       <input
         v-model="form.hora_cita"
         type="time"
+        :min="form.fecha_cita === hoy ? horaActual : null"
         class="mt-1 w-full border border-[#D8D8D8] rounded px-3 py-2 text-gray-700"
         required
+        @invalid="setMensajeHora"
+        @input="limpiarMensajeHora"
       />
     </div>
 
@@ -173,6 +177,16 @@ const props = defineProps({
 
 const emit = defineEmits(["cancelar", "guardado"]);
 
+const hoy = new Date().toISOString().split("T")[0];
+const ahora = new Date();
+const horaActual = ahora.toTimeString().slice(0, 5);
+const setMensajeHora = (e) => {
+  e.target.setCustomValidity("La hora debe ser igual o posterior a la actual.");
+};
+
+const limpiarMensajeHora = (e) => {
+  e.target.setCustomValidity("");
+};
 const mostrarFormularioPaciente = ref(false);
 const idPacienteSeleccionado = ref(null);
 const search = ref("");
