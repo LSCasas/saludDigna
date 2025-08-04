@@ -1,5 +1,6 @@
 <template>
   <div class="flex items-center gap-4 px-6 py-4">
+    <!-- Botón de selector de fecha -->
     <label
       for="inputFecha"
       class="bg-white border border-[#D8D8D8] p-2 rounded-md text-[#B22222] hover:bg-[#F9F9F9] cursor-pointer"
@@ -15,12 +16,15 @@
       @change="cambiarFecha"
     />
 
+    <!-- Botón Hoy -->
     <button
       class="bg-[#B22222] cursor-pointer text-white px-4 py-2 rounded-md hover:opacity-90"
       @click="irAHoy"
     >
       Hoy
     </button>
+
+    <!-- Rango de la semana -->
     <span class="text-gray-700 font-medium">
       {{ rangoTexto }}
     </span>

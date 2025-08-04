@@ -75,7 +75,7 @@ export const deleteCita = async (id) => {
 
 export const getRecetasConPaciente = async () => {
   try {
-    const response = await axios.get("/citas/recetas-pacientes");
+    const response = await axios.get("/citasCompletas");
     return response.data;
   } catch (error) {
     const message =
