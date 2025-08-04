@@ -24,10 +24,18 @@
           type="radio"
           name="patientOption"
           class="text-[#B22222] focus:ring-[#B22222] border-[#D8D8D8] mr-2"
-          @change="$emit('agregarPaciente')"
+          @change="mostrarFormularioPaciente = true"
         />
         <label for="new-patient" class="cursor-pointer">Agregar paciente</label>
       </div>
+    </div>
+
+    <!-- Formulario PatientForm (sección independiente) -->
+    <div class="md:col-span-2 mt-4" v-if="mostrarFormularioPaciente">
+      <PatientForm
+        @cancelar="mostrarFormularioPaciente = false"
+        @guardado="onPacienteGuardado"
+      />
     </div>
 
     <!-- Lista de pacientes -->
@@ -47,72 +55,71 @@
         </li>
       </ul>
     </div>
+    <div
+      v-if="!mostrarFormularioPaciente"
+      class="md:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-4"
+    >
+      <!-- Motivo -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Motivo</label>
+        <select
+          v-model="form.motivo"
+          class="mt-1 w-full border border-[#D8D8D8] rounded px-3 py-2 bg-white text-gray-700"
+          required
+        >
+          <option disabled value="">Selecciona una opción</option>
+          <option>Consulta</option>
+          <option>Procedimiento</option>
+          <option>Tratamiento en curso</option>
+        </select>
+      </div>
 
-    <!-- Motivo -->
-    <div>
-      <label class="block text-sm font-medium text-gray-700">Motivo</label>
-      <select
-        v-model="form.motivo"
-        class="mt-1 w-full border border-[#D8D8D8] rounded px-3 py-2 bg-white text-gray-700"
-        required
-      >
-        <option disabled value="">Selecciona una opción</option>
-        <option>Consulta</option>
-        <option>Procedimiento</option>
-        <option>Tratamiento en curso</option>
-      </select>
-    </div>
+      <!-- Fecha -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Fecha</label>
+        <input
+          v-model="form.fecha_cita"
+          type="date"
+          class="mt-1 w-full border border-[#D8D8D8] rounded px-3 py-2 text-gray-700"
+          required
+        />
+      </div>
 
-    <!-- Fecha -->
-    <div>
-      <label class="block text-sm font-medium text-gray-700">Fecha</label>
-      <input
-        v-model="form.fecha_cita"
-        type="date"
-        class="mt-1 w-full border border-[#D8D8D8] rounded px-3 py-2 text-gray-700"
-        required
-      />
-    </div>
+      <!-- Hora inicio -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700"
+          >Hora inicio</label
+        >
+        <input
+          v-model="form.hora_cita"
+          type="time"
+          class="mt-1 w-full border border-[#D8D8D8] rounded px-3 py-2 text-gray-700"
+          required
+        />
+      </div>
 
-    <!-- Hora inicio -->
-    <div>
-      <label class="block text-sm font-medium text-gray-700">Hora inicio</label>
-      <input
-        v-model="form.hora_cita"
-        type="time"
-        class="mt-1 w-full border border-[#D8D8D8] rounded px-3 py-2 text-gray-700"
-        required
-      />
-    </div>
+      <!-- Nota -->
+      <div class="md:col-span-2">
+        <label class="block text-sm font-medium text-gray-700"
+          >Nota de la cita</label
+        >
+        <textarea
+          v-model="form.nota"
+          rows="3"
+          placeholder="Escribe aquí..."
+          class="mt-1 w-full border border-[#D8D8D8] rounded px-3 py-2 text-gray-700"
+        ></textarea>
+      </div>
 
-    <!-- Nota -->
-    <div class="md:col-span-2">
-      <label class="block text-sm font-medium text-gray-700"
-        >Nota de la cita</label
-      >
-      <textarea
-        v-model="form.nota"
-        rows="3"
-        placeholder="Escribe aquí..."
-        class="mt-1 w-full border border-[#D8D8D8] rounded px-3 py-2 text-gray-700"
-      ></textarea>
-    </div>
-
-    <!-- Botones -->
-    <div class="md:col-span-2 flex justify-end gap-2 mt-4">
-      <button
-        type="button"
-        class="px-4 py-2 rounded border border-[#D8D8D8] text-gray-700 bg-white"
-        @click="recargarPagina"
-      >
-        Cancelar
-      </button>
-      <button
-        type="submit"
-        class="px-4 py-2 rounded bg-[#B22222] text-white hover:bg-[#911c1c]"
-      >
-        Guardar
-      </button>
+      <!-- Botones -->
+      <div class="md:col-span-2 flex justify-end gap-2 mt-4">
+        <button
+          type="submit"
+          class="px-4 py-2 cursor-pointer rounded bg-[#B22222] text-white hover:bg-[#911c1c]"
+        >
+          Guardar
+        </button>
+      </div>
     </div>
   </form>
 </template>
@@ -121,13 +128,15 @@
 import { ref } from "vue";
 import { getPacientes, getPacienteById } from "../api/pacientes.js";
 import { createCita } from "../api/citas.js";
+import PatientForm from "./PatientForm.vue";
 
+const mostrarFormularioPaciente = ref(false);
+const idPacienteSeleccionado = ref(null);
 const search = ref("");
 const pacientes = ref([]);
 const pacientesFiltrados = ref([]);
 const mostrarLista = ref(false);
 const pacientesCargados = ref(false);
-const idPacienteSeleccionado = ref(null);
 
 const form = ref({
   motivo: "",
@@ -135,6 +144,12 @@ const form = ref({
   hora_cita: "",
   nota: "",
 });
+
+const onPacienteGuardado = (nuevoPaciente) => {
+  idPacienteSeleccionado.value = nuevoPaciente.id_paciente;
+  search.value = `${nuevoPaciente.nombre} ${nuevoPaciente.apellidoP} ${nuevoPaciente.apellidoM}`;
+  mostrarFormularioPaciente.value = false;
+};
 
 function recargarPagina() {
   window.location.reload();
