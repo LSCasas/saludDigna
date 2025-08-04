@@ -72,3 +72,16 @@ export const deleteCita = async (id) => {
     throw error;
   }
 };
+
+export const getRecetasConPaciente = async () => {
+  try {
+    const response = await axios.get("/citas/recetas-pacientes");
+    return response.data;
+  } catch (error) {
+    const message =
+      error.response?.data?.message ||
+      "Error al obtener recetas con datos de paciente";
+    toast.error(message);
+    throw error;
+  }
+};
