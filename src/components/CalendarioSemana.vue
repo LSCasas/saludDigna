@@ -48,10 +48,11 @@
                   )"
                   :key="'i' + index"
                   :class="[
-                    'text-white text-[10px] rounded-sm px-1 truncate',
+                    'text-white text-[10px] rounded-sm px-1 truncate cursor-pointer',
                     getColor(cita.estado),
                   ]"
                   :style="getCitaStyle(dia.fechaCompleta, hora, 'inicio')"
+                  @click="seleccionarCita(cita.id_cita)"
                 >
                   {{ cita.paciente?.nombre }}
                 </div>
@@ -69,10 +70,11 @@
                   )"
                   :key="'f' + index"
                   :class="[
-                    'text-white text-[10px] rounded-sm px-1 truncate',
+                    'text-white text-[10px] rounded-sm px-1 truncate cursor-pointer',
                     getColor(cita.estado),
                   ]"
                   :style="getCitaStyle(dia.fechaCompleta, hora, 'fin')"
+                  @click="seleccionarCita(cita.id_cita)"
                 >
                   {{ cita.paciente?.nombre }}
                 </div>
@@ -181,6 +183,12 @@ export default {
       return {
         height: `${height}%`,
       };
+    },
+    seleccionarCita(id) {
+      const citaSeleccionada = this.citas.find((c) => c.id_cita === id);
+      if (citaSeleccionada) {
+        this.$emit("editar-cita", citaSeleccionada);
+      }
     },
   },
   watch: {
