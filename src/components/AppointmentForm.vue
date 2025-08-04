@@ -52,8 +52,11 @@
     <div>
       <label class="block text-sm font-medium text-gray-700">Motivo</label>
       <select
+        v-model="form.motivo"
         class="mt-1 w-full border border-[#D8D8D8] rounded px-3 py-2 bg-white text-gray-700"
+        required
       >
+        <option disabled value="">Selecciona una opción</option>
         <option>Consulta</option>
         <option>Procedimiento</option>
         <option>Tratamiento en curso</option>
@@ -64,8 +67,10 @@
     <div>
       <label class="block text-sm font-medium text-gray-700">Fecha</label>
       <input
+        v-model="form.fecha_cita"
         type="date"
         class="mt-1 w-full border border-[#D8D8D8] rounded px-3 py-2 text-gray-700"
+        required
       />
     </div>
 
@@ -73,8 +78,10 @@
     <div>
       <label class="block text-sm font-medium text-gray-700">Hora inicio</label>
       <input
+        v-model="form.hora_cita"
         type="time"
         class="mt-1 w-full border border-[#D8D8D8] rounded px-3 py-2 text-gray-700"
+        required
       />
     </div>
 
@@ -84,6 +91,7 @@
         >Nota de la cita</label
       >
       <textarea
+        v-model="form.nota"
         rows="3"
         placeholder="Escribe aquí..."
         class="mt-1 w-full border border-[#D8D8D8] rounded px-3 py-2 text-gray-700"
@@ -112,12 +120,21 @@
 <script setup>
 import { ref } from "vue";
 import { getPacientes, getPacienteById } from "../api/pacientes.js";
+import { createCita } from "../api/citas.js";
 
 const search = ref("");
 const pacientes = ref([]);
 const pacientesFiltrados = ref([]);
 const mostrarLista = ref(false);
 const pacientesCargados = ref(false);
+const idPacienteSeleccionado = ref(null);
+
+const form = ref({
+  motivo: "",
+  fecha_cita: "",
+  hora_cita: "",
+  nota: "",
+});
 
 function recargarPagina() {
   window.location.reload();
@@ -158,17 +175,34 @@ const seleccionarPaciente = async (paciente) => {
 
   try {
     const data = await getPacienteById(paciente.id);
-
+    idPacienteSeleccionado.value = data.id_paciente;
     search.value = `${data.nombre} ${data.apellidoP} ${data.apellidoM}`;
     mostrarLista.value = false;
-    // Puedes emitir o guardar más datos del paciente si lo necesitas
   } catch (error) {
     console.error("Error al obtener paciente:", error);
   }
 };
 
-function handleSubmit() {
-  // Aquí pones tu lógica de envío de formulario
-  console.log("Formulario enviado");
-}
+const handleSubmit = async () => {
+  if (!idPacienteSeleccionado.value) {
+    alert("Debes seleccionar un paciente antes de guardar.");
+    return;
+  }
+
+  const citaData = {
+    id_paciente: idPacienteSeleccionado.value,
+    fecha_cita: form.value.fecha_cita,
+    hora_cita: form.value.hora_cita,
+    motivo: form.value.motivo,
+    estado: "pendiente",
+    nota: form.value.nota,
+  };
+
+  try {
+    await createCita(citaData);
+    recargarPagina();
+  } catch (error) {
+    console.error("Error al crear cita:", error);
+  }
+};
 </script>
