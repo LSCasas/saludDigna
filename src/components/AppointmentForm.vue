@@ -318,6 +318,7 @@ const handleSubmit = async () => {
       window.location.reload();
     } else {
       await createCita(citaData);
+      window.location.reload();
     }
     emit("guardado", citaData);
   } catch (error) {
