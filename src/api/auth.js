@@ -28,3 +28,15 @@ export const logoutUser = async () => {
     throw error;
   }
 };
+
+export const getAuthenticatedUser = async () => {
+  try {
+    const response = await axios.get("/user", {
+      withCredentials: true,
+    });
+    return response.data.user;
+  } catch (error) {
+    toast.error("Usuario no autenticado");
+    throw error;
+  }
+};
