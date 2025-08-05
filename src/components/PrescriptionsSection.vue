@@ -13,6 +13,7 @@
           <tr class="bg-[#B22222] text-white">
             <th class="p-3">Fecha</th>
             <th class="p-3">Nombre</th>
+            <th class="p-3">Diagnostico</th>
           </tr>
         </thead>
         <tbody>
@@ -22,8 +23,9 @@
             class="even:bg-[#F9F9F9] odd:bg-white text-gray-800 border-b border-[#D8D8D8] cursor-pointer hover:bg-gray-200"
             @click="handleClickReceta(receta.id_receta)"
           >
-            <td class="p-3">{{ receta.fecha_receta }}</td>
+            <td class="p-3">{{ formatFecha(receta.created_at) }}</td>
             <td class="p-3">{{ nombreCompleto }}</td>
+            <td class="p-3">{{ receta.diagnostico }}</td>
           </tr>
         </tbody>
       </table>
@@ -63,7 +65,8 @@ export default {
     try {
       const response = await getRecetasPorPaciente(this.idPaciente);
       this.paciente = response.paciente;
-      this.recetas = (response.recetas || []).reverse(); // <--- Aquí inviertes el orden
+      this.recetas = (response.recetas || []).reverse();
+      console.log("Recetas cargadas:", this.recetas);
     } catch (error) {
       console.error("Error al cargar recetas:", error);
       this.recetas = [];
@@ -79,6 +82,17 @@ export default {
       } catch (error) {
         console.error("Error al obtener receta completa:", error);
       }
+    },
+    formatFecha(fecha) {
+      if (!fecha) return "";
+      const date = new Date(fecha);
+      return date.toLocaleString("es-MX", {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+      });
     },
   },
 };
