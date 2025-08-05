@@ -6,7 +6,7 @@
         <thead class="bg-gray-100 text-red-700 text-left sticky top-0 z-10">
           <tr>
             <th class="px-4 py-3">Paciente</th>
-            <th class="px-4 py-3">Última cita</th>
+            <th class="px-4 py-3">Última consulta</th>
             <th class="px-4 py-3">Próxima cita</th>
           </tr>
         </thead>
@@ -34,8 +34,20 @@
                 </div>
               </div>
             </td>
-            <td class="px-4 py-3">--</td>
-            <td class="px-4 py-3">--</td>
+            <td class="px-4 py-3">
+              {{
+                paciente.ultima_receta
+                  ? new Date(paciente.ultima_receta).toLocaleString()
+                  : "--"
+              }}
+            </td>
+            <td class="px-4 py-3">
+              {{
+                paciente.ultima_cita
+                  ? new Date(paciente.ultima_cita).toLocaleString()
+                  : "--"
+              }}
+            </td>
           </tr>
         </tbody>
       </table>
@@ -133,7 +145,26 @@ export default {
             p.documento?.toLowerCase().includes(termino) ||
             p.telefono?.toLowerCase().includes(termino)
         )
-        .reverse();
+        .sort((a, b) => {
+          const fechaRecetaA = a.ultima_receta
+            ? new Date(a.ultima_receta)
+            : null;
+          const fechaRecetaB = b.ultima_receta
+            ? new Date(b.ultima_receta)
+            : null;
+
+          if (fechaRecetaA && fechaRecetaB) {
+            return fechaRecetaB - fechaRecetaA;
+          }
+
+          if (fechaRecetaA && !fechaRecetaB) return -1; // a tiene receta, b no → a primero
+          if (!fechaRecetaA && fechaRecetaB) return 1; // b tiene receta, a no → b primero
+
+          // si ambos no tienen receta → ordenar por fecha de creación
+          const fechaCreacionA = new Date(a.created_at || 0);
+          const fechaCreacionB = new Date(b.created_at || 0);
+          return fechaCreacionB - fechaCreacionA;
+        });
     },
     totalPaginas() {
       return Math.ceil(
@@ -150,8 +181,8 @@ export default {
   },
   async mounted() {
     try {
-      const { getPacientes } = await import("../api/pacientes");
-      this.pacientes = await getPacientes();
+      const { getPacientesConUltimosDatos } = await import("../api/pacientes");
+      this.pacientes = await getPacientesConUltimosDatos();
     } catch (error) {
       console.error("Error cargando pacientes:", error);
     }

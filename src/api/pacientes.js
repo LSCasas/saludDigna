@@ -89,3 +89,16 @@ export const countPacientesInactivos = async () => {
     throw error;
   }
 };
+
+export const getPacientesConUltimosDatos = async () => {
+  try {
+    const response = await axios.get("/ultimosDatos");
+    return response.data;
+  } catch (error) {
+    const message =
+      error.response?.data?.message ||
+      "Error al obtener pacientes con últimos datos";
+    toast.error(message);
+    throw error;
+  }
+};
