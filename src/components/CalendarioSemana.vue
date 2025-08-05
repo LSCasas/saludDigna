@@ -54,7 +54,7 @@
                   :style="getCitaStyle(dia.fechaCompleta, hora, 'inicio')"
                   @click="seleccionarCita(cita.id_cita)"
                 >
-                  {{ cita.paciente?.nombre }}
+                  {{ cita.paciente?.nombre }} {{ cita.paciente?.apellidoP }}
                 </div>
               </div>
 
