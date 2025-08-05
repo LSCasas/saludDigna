@@ -63,18 +63,6 @@ export const updateReceta = async (id, recetaData) => {
   }
 };
 
-export const deleteReceta = async (id) => {
-  try {
-    const response = await axios.delete(`/recetas/${id}`);
-    toast.success(response.data?.message || "Receta eliminada correctamente");
-    return response.data;
-  } catch (error) {
-    const message = error.response?.data?.message || "Error al eliminar receta";
-    toast.error(message);
-    throw error;
-  }
-};
-
 export const getRecetaCompletaById = async (id) => {
   try {
     const response = await axios.get(`/recetas/${id}/completa`);

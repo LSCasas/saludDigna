@@ -17,6 +17,7 @@
         <PatientButton @open-new-patient="openPatientForm" />
         <AppointmentButton @open-appointment="openAppointmentForm" />
         <PrescriptionButton @open-prescription="openPrescriptionForm" />
+        <LogoutButton />
       </div>
     </div>
 
@@ -89,11 +90,12 @@ import CreatePrescription from "./CreatePrescription.vue";
 import PatientButton from "./PatientButton.vue";
 import AppointmentButton from "./AppointmentButton.vue";
 import PrescriptionButton from "./PrescriptionButton.vue";
-
+import LogoutButton from "./LogoutButton.vue";
 export default {
   name: "FloatingMenu",
   components: {
     CreateAppointment,
+    LogoutButton,
     CreateNewPatient,
     CreatePrescription,
     PatientButton,
