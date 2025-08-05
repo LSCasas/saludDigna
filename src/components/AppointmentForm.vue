@@ -109,7 +109,7 @@
       <input
         v-model="form.fecha_cita"
         type="date"
-        :min="hoy"
+        :min="!isEdicion ? hoy : null"
         class="mt-1 w-full border border-[#D8D8D8] rounded px-3 py-2 text-gray-700"
         required
       />
@@ -121,10 +121,10 @@
       <input
         v-model="form.hora_cita"
         type="time"
-        :min="form.fecha_cita === hoy ? horaActual : null"
+        :min="!isEdicion && form.fecha_cita === hoy ? horaActual : null"
         class="mt-1 w-full border border-[#D8D8D8] rounded px-3 py-2 text-gray-700"
         required
-        @invalid="setMensajeHora"
+        @invalid="!isEdicion && setMensajeHora($event)"
         @input="limpiarMensajeHora"
       />
     </div>
