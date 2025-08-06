@@ -1,150 +1,177 @@
 <template>
-  <form
-    @submit.prevent="handleSubmit"
-    class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4"
-  >
-    <div>
-      <label class="block text-sm font-medium text-gray-700">
-        Nombres<span class="text-red-500">*</span>
-      </label>
-      <input
-        v-model="form.nombre"
-        type="text"
-        class="mt-1 w-full border border-[#D8D8D8] rounded px-3 py-2 text-gray-800"
-        required
-      />
-    </div>
-
-    <div class="flex gap-2">
-      <div class="w-1/2">
+  <div class="h-[70vh] overflow-y-auto pr-2">
+    <form
+      @submit.prevent="handleSubmit"
+      class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4"
+    >
+      <div>
         <label class="block text-sm font-medium text-gray-700">
-          Apellido paterno<span class="text-red-500">*</span>
+          Nombres<span class="text-red-500">*</span>
         </label>
         <input
-          v-model="form.apellidoP"
+          v-model="form.nombre"
           type="text"
           class="mt-1 w-full border border-[#D8D8D8] rounded px-3 py-2 text-gray-800"
           required
         />
       </div>
-      <div class="w-1/2">
-        <label class="block text-sm font-medium text-gray-700"
-          >Apellido materno</label
-        >
+
+      <div class="flex gap-2">
+        <div class="w-1/2">
+          <label class="block text-sm font-medium text-gray-700">
+            Apellido paterno<span class="text-red-500">*</span>
+          </label>
+          <input
+            v-model="form.apellidoP"
+            type="text"
+            class="mt-1 w-full border border-[#D8D8D8] rounded px-3 py-2 text-gray-800"
+            required
+          />
+        </div>
+        <div class="w-1/2">
+          <label class="block text-sm font-medium text-gray-700"
+            >Apellido materno</label
+          >
+          <input
+            v-model="form.apellidoM"
+            type="text"
+            class="mt-1 w-full border border-[#D8D8D8] rounded px-3 py-2 text-gray-800"
+          />
+        </div>
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-gray-700">
+          Teléfono
+        </label>
+        <div class="flex items-center gap-2">
+          <input
+            v-model="form.telefono"
+            type="tel"
+            :disabled="noTelefono"
+            class="w-full border border-[#D8D8D8] rounded px-3 py-2 text-gray-800"
+            placeholder="+52"
+          />
+        </div>
+        <div class="mt-1">
+          <label
+            class="inline-flex items-center text-sm text-gray-600 cursor-pointer"
+          >
+            <input
+              type="checkbox"
+              class="form-checkbox text-[#B22222]"
+              v-model="noTelefono"
+            />
+            <span class="ml-2 select-none">No tiene</span>
+          </label>
+        </div>
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Email</label>
         <input
-          v-model="form.apellidoM"
-          type="text"
+          v-model="form.correo"
+          type="email"
+          :disabled="noEmail"
           class="mt-1 w-full border border-[#D8D8D8] rounded px-3 py-2 text-gray-800"
+          :required="!noEmail"
+          placeholder="ejemplo@correo.com"
         />
+        <div class="mt-1">
+          <label
+            class="inline-flex items-center text-sm text-gray-600 cursor-pointer"
+          >
+            <input
+              type="checkbox"
+              class="form-checkbox text-[#B22222]"
+              v-model="noEmail"
+            />
+            <span class="ml-2 select-none">No tiene</span>
+          </label>
+        </div>
       </div>
-    </div>
 
-    <div>
-      <label class="block text-sm font-medium text-gray-700"> Teléfono </label>
-      <div class="flex items-center gap-2">
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Domicilio</label>
         <input
-          v-model="form.telefono"
-          type="tel"
-          :disabled="noTelefono"
-          class="w-full border border-[#D8D8D8] rounded px-3 py-2 text-gray-800"
-          placeholder="+52"
+          v-model="form.domicilio"
+          type="text"
+          :disabled="noDomicilio"
+          class="mt-1 w-full border border-[#D8D8D8] rounded px-3 py-2 text-gray-800"
+          placeholder="Calle, número, colonia..."
+        />
+        <div class="mt-1">
+          <label
+            class="inline-flex items-center text-sm text-gray-600 cursor-pointer"
+          >
+            <input
+              type="checkbox"
+              class="form-checkbox text-[#B22222]"
+              v-model="noDomicilio"
+            />
+            <span class="ml-2 select-none">No asignar</span>
+          </label>
+        </div>
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-gray-700"
+          >F. nacimiento<span class="text-red-500">*</span></label
+        >
+        <input
+          v-model="form.fecha_nacimiento"
+          type="date"
+          class="mt-1 w-full border border-[#D8D8D8] rounded px-3 py-2 text-gray-800"
+          required
         />
       </div>
-      <div class="mt-1">
-        <label
-          class="inline-flex items-center text-sm text-gray-600 cursor-pointer"
+
+      <div>
+        <label class="block text-sm font-medium text-gray-700"
+          >Género<span class="text-red-500">*</span></label
         >
-          <input
-            type="checkbox"
-            class="form-checkbox text-[#B22222]"
-            v-model="noTelefono"
-          />
-          <span class="ml-2 select-none">No tiene</span>
-        </label>
-      </div>
-    </div>
-
-    <div>
-      <label class="block text-sm font-medium text-gray-700">Email</label>
-      <input
-        v-model="form.correo"
-        type="email"
-        :disabled="noEmail"
-        class="mt-1 w-full border border-[#D8D8D8] rounded px-3 py-2 text-gray-800"
-        :required="!noEmail"
-        placeholder="ejemplo@correo.com"
-      />
-      <div class="mt-1">
-        <label
-          class="inline-flex items-center text-sm text-gray-600 cursor-pointer"
+        <select
+          v-model="form.genero"
+          class="mt-1 w-full border border-[#D8D8D8] rounded px-3 py-2 bg-white text-gray-800"
+          required
         >
-          <input
-            type="checkbox"
-            class="form-checkbox text-[#B22222]"
-            v-model="noEmail"
-          />
-          <span class="ml-2 select-none">No tiene</span>
-        </label>
+          <option value="">Seleccione</option>
+          <option value="M">Hombre</option>
+          <option value="F">Mujer</option>
+        </select>
       </div>
-    </div>
 
-    <div>
-      <label class="block text-sm font-medium text-gray-700"
-        >F. nacimiento<span class="text-red-500">*</span></label
-      >
-      <input
-        v-model="form.fecha_nacimiento"
-        type="date"
-        class="mt-1 w-full border border-[#D8D8D8] rounded px-3 py-2 text-gray-800"
-        required
-      />
-    </div>
+      <div v-if="isEdicion">
+        <label class="block text-sm font-medium text-gray-700"
+          >Estado<span class="text-red-500">*</span></label
+        >
+        <select
+          v-model="form.estado"
+          class="mt-1 w-full border border-[#D8D8D8] rounded px-3 py-2 bg-white text-gray-800"
+          required
+        >
+          <option value="activo">activo</option>
+          <option value="inactivo">inactivo</option>
+        </select>
+      </div>
 
-    <div>
-      <label class="block text-sm font-medium text-gray-700"
-        >Género<span class="text-red-500">*</span></label
-      >
-      <select
-        v-model="form.genero"
-        class="mt-1 w-full border border-[#D8D8D8] rounded px-3 py-2 bg-white text-gray-800"
-        required
-      >
-        <option value="">Seleccione</option>
-        <option value="M">Hombre</option>
-        <option value="F">Mujer</option>
-      </select>
-    </div>
-
-    <div v-if="isEdicion">
-      <label class="block text-sm font-medium text-gray-700"
-        >Estado<span class="text-red-500">*</span></label
-      >
-      <select
-        v-model="form.estado"
-        class="mt-1 w-full border border-[#D8D8D8] rounded px-3 py-2 bg-white text-gray-800"
-        required
-      >
-        <option value="activo">activo</option>
-        <option value="inactivo">inactivo</option>
-      </select>
-    </div>
-
-    <div class="md:col-span-2 flex justify-end gap-2 mt-4">
-      <button
-        type="button"
-        class="px-4 cursor-pointer py-2 rounded border border-[#D8D8D8] text-gray-700 bg-white"
-        @click="$emit('cancelar')"
-      >
-        Cancelar
-      </button>
-      <button
-        type="submit"
-        class="px-4 cursor-pointer py-2 rounded bg-[#B22222] text-white hover:bg-[#911c1c]"
-      >
-        {{ isEdicion ? "Guardar" : "Crear" }}
-      </button>
-    </div>
-  </form>
+      <div class="md:col-span-2 flex justify-end gap-2 mt-4">
+        <button
+          type="button"
+          class="px-4 cursor-pointer py-2 rounded border border-[#D8D8D8] text-gray-700 bg-white"
+          @click="$emit('cancelar')"
+        >
+          Cancelar
+        </button>
+        <button
+          type="submit"
+          class="px-4 cursor-pointer py-2 rounded bg-[#B22222] text-white hover:bg-[#911c1c]"
+        >
+          {{ isEdicion ? "Guardar" : "Crear" }}
+        </button>
+      </div>
+    </form>
+  </div>
 </template>
 
 <script setup>
@@ -164,6 +191,7 @@ const emit = defineEmits(["cancelar", "guardado"]);
 const isEdicion = ref(false);
 const noTelefono = ref(false);
 const noEmail = ref(false);
+const noDomicilio = ref(false);
 
 const form = reactive({
   nombre: "",
@@ -171,6 +199,7 @@ const form = reactive({
   apellidoM: "",
   telefono: "",
   correo: "",
+  domicilio: "",
   fecha_nacimiento: "",
   genero: "",
   estado: "",
@@ -185,6 +214,8 @@ const resetForm = () => {
   form.fecha_nacimiento = "";
   form.genero = "";
   form.estado = "";
+  form.domicilio = "";
+  noDomicilio.value = false;
   noTelefono.value = false;
   noEmail.value = false;
 };
@@ -200,9 +231,9 @@ watch(
       form.correo = nuevoPaciente.correo || "";
       form.fecha_nacimiento = nuevoPaciente.fecha_nacimiento || "";
       form.genero = nuevoPaciente.genero || "";
-
+      form.domicilio = nuevoPaciente.domicilio || "";
       form.estado = nuevoPaciente.estado || "";
-
+      noDomicilio.value = !form.domicilio;
       noTelefono.value = !form.telefono;
       noEmail.value = !form.correo;
     } else {
@@ -229,6 +260,7 @@ const handleSubmit = async () => {
       apellidoM: form.apellidoM || "",
       telefono: noTelefono.value ? "" : form.telefono,
       correo: noEmail.value ? "" : form.correo,
+      domicilio: noDomicilio.value ? "" : form.domicilio,
       fecha_nacimiento: form.fecha_nacimiento,
       genero: form.genero,
       estado: form.estado,

@@ -1,5 +1,5 @@
 <template>
-  <div class="paciente-info flex items-center space-x-4 mb-[7vh]">
+  <div class="paciente-info flex items-center space-x-4 md:mb-[7vh] mb-10">
     <img
       :src="paciente.imagen"
       alt="Foto del paciente"
