@@ -8,10 +8,20 @@ const api = axios.create({
   withCredentials: true,
 });
 
+api.interceptors.request.use((config) => {
+  const match = document.cookie.match(/XSRF-TOKEN=([^;]+)/);
+  if (match) {
+    config.headers["X-XSRF-TOKEN"] = decodeURIComponent(match[1]);
+  }
+  return config;
+});
+
 export const loginUser = async (credentials) => {
   try {
+    // primero se piden las cookies
     await api.get("/sanctum/csrf-cookie");
 
+    // después se hace login con el token ya en el header
     const response = await api.post("/login", credentials);
 
     toast.success(response.data?.message || "Inicio de sesión exitoso");
