@@ -2,7 +2,7 @@ import axios from "axios";
 
 // Crear instancia
 const instance = axios.create({
-  baseURL: "http://localhost:8000",
+  baseURL: "https://saluddigna-api.onrender.com",
   withCredentials: true,
   headers: {
     "Content-Type": "application/json",
