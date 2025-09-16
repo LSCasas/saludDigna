@@ -1,15 +1,18 @@
-import axios from "./axios";
+import axios from "axios";
 import { useToast } from "vue-toastification";
 
 const toast = useToast();
 
+const api = axios.create({
+  baseURL: "https://saluddigna-api.onrender.com",
+  withCredentials: true,
+});
+
 export const loginUser = async (credentials) => {
   try {
-    await axios.get("/sanctum/csrf-cookie", { withCredentials: true });
+    await api.get("/sanctum/csrf-cookie");
 
-    const response = await axios.post("/login", credentials, {
-      withCredentials: true,
-    });
+    const response = await api.post("/login", credentials);
 
     toast.success(response.data?.message || "Inicio de sesión exitoso");
     return response.data;
@@ -22,7 +25,7 @@ export const loginUser = async (credentials) => {
 
 export const logoutUser = async () => {
   try {
-    const response = await axios.post("/logout", {}, { withCredentials: true });
+    const response = await api.post("/logout");
     toast.success(response.data?.message || "Sesión cerrada correctamente");
     return response.data;
   } catch (error) {
@@ -34,7 +37,7 @@ export const logoutUser = async () => {
 
 export const getAuthenticatedUser = async () => {
   try {
-    const response = await axios.get("/user", { withCredentials: true });
+    const response = await api.get("/user");
     return response.data.user;
   } catch (error) {
     toast.error("Usuario no autenticado");
