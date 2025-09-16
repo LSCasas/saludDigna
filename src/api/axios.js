@@ -1,5 +1,7 @@
 import axios from "axios";
 
+// pruebas en local http://localhost:8000
+
 // Crear instancia
 const instance = axios.create({
   baseURL: "https://porttusalud-api.lscasas.dev",
