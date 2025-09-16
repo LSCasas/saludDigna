@@ -5,8 +5,11 @@ const toast = useToast();
 
 export const loginUser = async (credentials) => {
   try {
-    await axios.get("/sanctum/csrf-cookie");
-    const response = await axios.post("/login", credentials);
+    await axios.get("/sanctum/csrf-cookie", { withCredentials: true });
+
+    const response = await axios.post("/login", credentials, {
+      withCredentials: true,
+    });
 
     toast.success(response.data?.message || "Inicio de sesión exitoso");
     return response.data;
@@ -19,7 +22,7 @@ export const loginUser = async (credentials) => {
 
 export const logoutUser = async () => {
   try {
-    const response = await axios.post("/logout");
+    const response = await axios.post("/logout", {}, { withCredentials: true });
     toast.success(response.data?.message || "Sesión cerrada correctamente");
     return response.data;
   } catch (error) {
@@ -31,9 +34,7 @@ export const logoutUser = async () => {
 
 export const getAuthenticatedUser = async () => {
   try {
-    const response = await axios.get("/user", {
-      withCredentials: true,
-    });
+    const response = await axios.get("/user", { withCredentials: true });
     return response.data.user;
   } catch (error) {
     toast.error("Usuario no autenticado");
